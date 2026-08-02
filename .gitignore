@@ -1,0 +1,25 @@
+# build output
+dist/
+
+# local project index — each machine maintains its own
+.claude/index/
+
+# Claude Design working files — personal material, not part of the site
+uploads/
+scraps/
+.thumbnail
+
+# stale exported pages, superseded by *.dc.html — kept on disk for reference only
+/index.html
+/Education.html
+/Experience.html
+/Projects.html
+/index-backup.dc.html
+
+.DS_Store
+
+# personal documents — never commit (see CLAUDE.md)
+*CV*.pdf
+*cv*.pdf
+*[Rr]esume*.pdf
+*[Rr]ésumé*.pdf

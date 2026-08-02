@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects - Yam Arieli</title>
+<meta name="description" content="Selected ML research and data engineering projects: NeuronLens, Survival of the Flattest, TrainStream, agentic QA pipelines and more.">
+<meta property="og:title" content="Projects - Yam Arieli">
+<meta property="og:description" content="Selected ML research and data engineering projects: NeuronLens, Survival of the Flattest, TrainStream, agentic QA pipelines and more.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/yam-photo.jpeg">
+<meta name="twitter:card" content="summary">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-1d3d64b4-4e2e-4fc4-9a4f-b6c842836753/styles.css">
+<script src="_ds/broadsheet-1d3d64b4-4e2e-4fc4-9a4f-b6c842836753/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+a:hover { color: var(--color-accent-700); }
+#dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; }
+.connect-trigger:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.connect-row:hover { background: var(--color-accent-100); }
+@keyframes om-pop { from { opacity: 0; transform: translateY(14px) scale(0.975); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes om-veil { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</helmet>
+<nav class="nav" style="position:sticky;top:0;z-index:50;max-width:1200px;margin:0 auto;padding:var(--space-4) clamp(20px,5vw,72px);background:var(--color-bg);flex-wrap:wrap;row-gap:var(--space-2)">
+  <span class="nav-brand">Yam Arieli</span>
+  <a href="index.dc.html">Home</a>
+  <a href="Experience.dc.html">Experience</a>
+  <a href="Education.dc.html">Education</a>
+  <a href="Projects.dc.html" aria-current="page">Projects</a>
+  <div class="connect-menu" ref="{{ connectMenuRef }}" style="position:relative">
+    <span class="connect-trigger" onClick="{{ toggleConnect }}" role="button" tabindex="0" aria-expanded="{{ connectOpen }}" style="cursor:pointer;font-size:14px;color:inherit;display:flex;align-items:center;gap:4px">Connect<svg width="10" height="10" viewBox="0 0 256 256" fill="currentColor" style="opacity:.6;transform:{{ chevronTransform }};transition:transform 220ms ease"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></span>
+    <div class="card elev-md" style="position:absolute;top:calc(100% + var(--space-2));right:0;min-width:220px;z-index:60;padding:var(--space-2);transform-origin:top;transition:transform 220ms cubic-bezier(0.22,0.61,0.36,1), opacity 180ms ease;transform:{{ menuTransform }};opacity:{{ menuOpacity }};pointer-events:{{ menuPointerEvents }}">
+      <a class="connect-row" href="mailto:arieliyam111@gmail.com" onClick="{{ closeConnect }}" style="display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2);color:var(--color-text);text-decoration:none;font-size:14px;border-radius:var(--radius-md)"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" style="flex-shrink:0"><path opacity="0.25" d="M224,56V192a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V56Z"></path><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-19.09,16L128,133.15,51.09,64ZM216,192H40V74.19l82.59,74.11a8,8,0,0,0,10.82,0L216,74.19V192Z"></path></svg>Email</a>
+      <a class="connect-row" href="https://www.linkedin.com/in/yam-arieli/" target="_blank" rel="noopener" onClick="{{ closeConnect }}" style="display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2);color:var(--color-text);text-decoration:none;font-size:14px;border-radius:var(--radius-md)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>LinkedIn</a>
+      <a class="connect-row" href="https://github.com/Yam-Arieli" target="_blank" rel="noopener" onClick="{{ closeConnect }}" style="display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2);color:var(--color-text);text-decoration:none;font-size:14px;border-radius:var(--radius-md)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>GitHub</a>
+    </div>
+  </div>
+  <a class="btn btn-primary" role="button" aria-disabled="true" title="Résumé available on request" style="cursor:default">Résumé</a>
+</nav>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,72px)">
+
+  <section aria-label="All projects" onClick="{{ onGridClick }}" onKeyDown="{{ onGridKey }}" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:var(--space-4);padding:clamp(24px,4vw,44px) 0 clamp(32px,5vw,56px)">
+
+    <article data-open="neuronlens" role="button" tabIndex="0" aria-label="Open details for NeuronLens" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);box-shadow:none;cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+      <span class="tag tag-accent" style="width:fit-content">Interpretability</span>
+      <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;line-height:1.12;letter-spacing:-0.012em;margin:2px 0 0">NeuronLens</h2>
+      <p style="font-family:var(--font-body);font-style:italic;font-size:15px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">What is this network actually doing, layer by layer?</p>
+      <p style="font-size:13.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 56%, transparent);margin:auto 0 0;padding-top:var(--space-3)">Open-source tool · PyTorch</p>
+      <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+    </article>
+
+    <article data-open="flattest" role="button" tabIndex="0" aria-label="Open details for Survival of the Flattest" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);box-shadow:none;cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+      <span class="tag tag-accent" style="width:fit-content">Deep learning research</span>
+      <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;line-height:1.12;letter-spacing:-0.012em;margin:2px 0 0">Survival of the Flattest</h2>
+      <p style="font-family:var(--font-body);font-style:italic;font-size:15px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">Does evolution pick the fittest sequence, or the most mutation-proof one?</p>
+      <p style="font-size:13.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 56%, transparent);margin:auto 0 0;padding-top:var(--space-3)">Nitzan Lab, HUJI · 1D-CNN</p>
+      <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+    </article>
+
+    <article data-open="trainstream" role="button" tabIndex="0" aria-label="Open details for TrainStream" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);box-shadow:none;cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+      <span class="tag tag-accent" style="width:fit-content">Training at scale</span>
+      <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;line-height:1.12;letter-spacing:-0.012em;margin:2px 0 0">TrainStream</h2>
+      <p style="font-family:var(--font-body);font-style:italic;font-size:15px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">How do you train on 10M cells × 20K genes without distributed infrastructure?</p>
+      <p style="font-size:13.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 56%, transparent);margin:auto 0 0;padding-top:var(--space-3)">Python library · MIT · pip-installable</p>
+      <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+    </article>
+
+    <article data-open="agentic" role="button" tabIndex="0" aria-label="Open details for the Manager–Worker Agentic QA Pipeline" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);box-shadow:none;cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+      <span class="tag tag-accent" style="width:fit-content">Advanced NLP</span>
+      <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;line-height:1.12;letter-spacing:-0.012em;margin:2px 0 0">Manager–Worker Agentic QA</h2>
+      <p style="font-family:var(--font-body);font-style:italic;font-size:15px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">Can a small model learn to break a hard question into easy ones?</p>
+      <p style="font-size:13.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 56%, transparent);margin:auto 0 0;padding-top:var(--space-3)">Flan-T5 · RoBERTa · STS harness</p>
+      <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+    </article>
+
+    <article data-open="yad2" role="button" tabIndex="0" aria-label="Open details for the Yad2 Real-Estate Scraper" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);box-shadow:none;cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+      <span class="tag tag-accent" style="width:fit-content">Pipeline → dashboard</span>
+      <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;line-height:1.12;letter-spacing:-0.012em;margin:2px 0 0">Yad2 Real-Estate Scraper</h2>
+      <p style="font-family:var(--font-body);font-style:italic;font-size:15px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">What does the Israeli housing market look like if you measure it yourself?</p>
+      <p style="font-size:13.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 56%, transparent);margin:auto 0 0;padding-top:var(--space-3)">Live Looker dashboard · 6 stars</p>
+      <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+    </article>
+
+    <sc-if value="{{ showWriting }}" hint-placeholder-val="{{ true }}">
+    <article data-open="writing" role="button" tabIndex="0" aria-label="Open details for the Medium article on web scraping" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);box-shadow:none;cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+      <span class="tag tag-accent-2" style="width:fit-content">Published writing</span>
+      <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;line-height:1.12;letter-spacing:-0.012em;margin:2px 0 0">Mastering Web Scraping</h2>
+      <p style="font-family:var(--font-body);font-style:italic;font-size:15px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">The techniques you only learn once your scraper meets real traffic.</p>
+      <p style="font-size:13.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 56%, transparent);margin:auto 0 0;padding-top:var(--space-3)">Python in Plain English</p>
+      <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+    </article>
+    </sc-if>
+
+  </section>
+
+  <section style="padding:clamp(24px,5vw,48px) 0 var(--space-6)">
+    <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3.5vw,36px);letter-spacing:-0.015em;margin:0 0 var(--space-3);max-width:26ch">Want the long version of any of these?</h3>
+    <p style="font-size:16px;line-height:1.65;color:color-mix(in srgb, var(--color-text) 78%, transparent);max-width:56ch;margin:0 0 var(--space-4)">I'm happy to walk through the methods, the dead ends, and what I'd do differently. Open to data science, ML research and product roles.</p>
+    <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:center">
+      <a class="btn btn-primary" href="mailto:arieliyam111@gmail.com">Email me</a>
+      <a href="https://www.linkedin.com/in/yam-arieli/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/Yam-Arieli" target="_blank" rel="noopener">All 16 repositories</a>
+      <span style="color:color-mix(in srgb, var(--color-text) 55%, transparent)" title="Résumé available on request">Résumé</span>
+    </div>
+  </section>
+
+  <footer style="padding:var(--space-6) 0 var(--space-8);font-size:13px;color:color-mix(in srgb, var(--color-text) 65%, transparent)">© 2026 Yam Arieli</footer>
+</div>
+
+<div ref="{{ backdropRef }}" onClick="{{ onBackdropClick }}" role="dialog" aria-modal="true" aria-label="Project detail" style="display:none;position:fixed;inset:0;z-index:200;background:color-mix(in srgb, #201e1d 46%, transparent);padding:clamp(16px,4vh,48px) clamp(16px,4vw,48px);overflow-y:auto;animation:om-veil 180ms ease both">
+  <div data-panel-shell="1" style="width:min(1000px,100%);margin:0 auto;background:var(--color-neutral-100);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:clamp(20px,3vw,40px);animation:om-pop 260ms cubic-bezier(0.22,0.61,0.36,1) both">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-6)">
+      <button ref="{{ backRef }}" type="button" class="btn btn-secondary" onClick="{{ closeDetail }}">← Back</button>
+      <span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 55%, transparent)">Project detail</span>
+    </div>
+
+    <article data-detail="neuronlens" style="display:none;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-accent">Interpretability</span>
+          <span class="tag tag-neutral">Open source tool</span>
+        </div>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(28px,3vw,38px);line-height:1.08;letter-spacing:-0.018em;margin:0">NeuronLens</h2>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:17px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 74%, transparent);max-width:44ch">What is this network actually doing, layer by layer?</p>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">Hand it a trained PyTorch model and a labelled dataset; it returns a single self-contained HTML file where you can watch activations flow, filter by any metadata condition, and hover a neuron to trace its influence forward through every downstream layer.</p>
+        <sc-if value="{{ showImpactMetrics }}" hint-placeholder-val="{{ true }}">
+        <ul style="margin:0;padding-left:1.05em;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Neurons are permuted within each layer to minimise weighted edge crossings, so neurons that fire together sit together.</li>
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Two-filter compare mode blends blue/red per neuron to show where two cohorts diverge.</li>
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Output ships as one file with all data inlined: no server, no build step, opens anywhere.</li>
+        </ul>
+        </sc-if>
+        <p style="font-size:14px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 58%, transparent);margin:var(--space-1) 0 0">PyTorch · forward hooks · canvas renderer · zero-dependency output</p>
+        <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:center">
+          <a class="btn btn-primary" href="https://github.com/Yam-Arieli/NeuronLens" target="_blank" rel="noopener">View the code →</a>
+          <a href="https://github.com/Yam-Arieli/NeuronLens#example--titanic-survival" target="_blank" rel="noopener" style="font-size:15px">Titanic walkthrough</a>
+        </div>
+      </div>
+      <figure style="margin:0;min-width:0">
+        <img src="https://github.com/Yam-Arieli/NeuronLens/raw/main/examples/titanic_output/titanic_example.gif" alt="NeuronLens exploring activations of an MLP trained on the Titanic dataset" style="display:block;width:100%;aspect-ratio:16/11;object-fit:cover;background:var(--color-neutral-200);border-radius:var(--radius-md);box-shadow:var(--shadow-sm)" />
+        <figcaption style="margin-top:var(--space-2);font-size:13px;line-height:1.5;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Survival signal separating across an MLP trained on the Titanic set.</figcaption>
+      </figure>
+    </article>
+
+    <article data-detail="flattest" style="display:none;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-accent">Deep learning research</span>
+          <span class="tag tag-neutral">Nitzan Lab, HUJI</span>
+        </div>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(28px,3vw,38px);line-height:1.08;letter-spacing:-0.018em;margin:0">Survival of the Flattest</h2>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:17px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 74%, transparent);max-width:44ch">Does evolution pick the fittest sequence, or the most mutation-proof one?</p>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">A pipeline that simulates the fitness landscape of yeast promoters: a 1D-CNN oracle predicts expression from 110bp of DNA, a Gaussian optimality curve maps expression to fitness, and a rectified-flatness metric scores how fragile each sequence is to mutation.</p>
+        <sc-if value="{{ showImpactMetrics }}" hint-placeholder-val="{{ true }}">
+        <ul style="margin:0;padding-left:1.05em;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">The <em>rarest</em> promoter sits exactly at the Pareto knee: maximum robustness bought without giving up peak fitness.</li>
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">The <em>most common</em> promoter sits deep inside a super-flat plateau, surrounded by equally fit neighbours.</li>
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Fragility scored over all 240 one-mutation neighbours, counting only deleterious moves, a rectified alternative to the Hessian trace.</li>
+        </ul>
+        </sc-if>
+        <p style="font-size:14px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 58%, transparent);margin:var(--space-1) 0 0">PyTorch 1D-CNN · Pareto optimisation · built in a lab hackathon</p>
+        <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:center">
+          <a class="btn btn-primary" href="https://github.com/Yam-Arieli/Survival-of-the-Flattest" target="_blank" rel="noopener">View the code →</a>
+          <a href="https://www.nature.com/articles/35085569" target="_blank" rel="noopener" style="font-size:15px">The 2001 paper it tests</a>
+        </div>
+      </div>
+      <figure style="margin:0;min-width:0">
+        <img src="https://github.com/Yam-Arieli/Survival-of-the-Flattest/raw/main/images/most_common_vs_rare.png" alt="Pareto front analysis comparing the rarest yeast promoter at the Pareto knee against the most common promoter inside a flat plateau" style="display:block;width:100%;aspect-ratio:16/11;object-fit:contain;background:var(--color-bg);border-radius:var(--radius-md);box-shadow:var(--shadow-sm)" />
+        <figcaption style="margin-top:var(--space-2);font-size:13px;line-height:1.5;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Left: rarest sequence at the Pareto knee. Right: most common sequence in a super-flat plateau.</figcaption>
+      </figure>
+    </article>
+
+    <article data-detail="trainstream" style="display:none;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-accent">Training at scale</span>
+          <span class="tag tag-neutral">Python library</span>
+        </div>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(28px,3vw,38px);line-height:1.08;letter-spacing:-0.018em;margin:0">TrainStream</h2>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:17px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 74%, transparent);max-width:44ch">How do you train on 10M cells × 20K genes without distributed infrastructure?</p>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">A streaming-coreset loop: merge each incoming chunk with a small retained buffer, train, then use per-sample training dynamics to decide which samples earn their place in the buffer. The model sees all the data once; the most informative samples keep influencing training after their chunk is gone.</p>
+        <p style="font-size:19px;line-height:1.4;margin:var(--space-1) 0 0;color:var(--color-accent-700);font-family:var(--font-heading)">Memory cost is 2k + m + model, independent of total dataset size.</p>
+        <sc-if value="{{ showImpactMetrics }}" hint-placeholder-val="{{ true }}">
+        <ul style="margin:0;padding-left:1.05em;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Five selection strategies: AUM margin, mean confidence, weighted-quantile sampling, forgetting events, and a random baseline to prove they beat it.</li>
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Two independent staleness guards stop early chunks from colonising the buffer: a per-chunk share cap and geometric confidence decay.</li>
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Every retained sample carries its provenance, so you can audit which chunks the final coreset actually came from.</li>
+        </ul>
+        </sc-if>
+        <p style="font-size:14px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 58%, transparent);margin:var(--space-1) 0 0">PyTorch · scanpy / AnnData · pip-installable · MIT</p>
+        <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:center">
+          <a class="btn btn-primary" href="https://github.com/Yam-Arieli/TrainStream" target="_blank" rel="noopener">View the code →</a>
+          <a href="https://github.com/Yam-Arieli/TrainStream#selection-methods" target="_blank" rel="noopener" style="font-size:15px">Selection methods</a>
+        </div>
+      </div>
+    </article>
+
+    <article data-detail="agentic" style="display:none;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-accent">Advanced NLP</span>
+          <span class="tag tag-neutral">Graduate coursework</span>
+        </div>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(28px,3vw,38px);line-height:1.08;letter-spacing:-0.018em;margin:0">Manager–Worker Agentic QA Pipeline</h2>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:17px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 74%, transparent);max-width:44ch">Can a small model learn to break a hard question into easy ones?</p>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">Fine-tuned Flan-T5 as a manager that iteratively decomposes complex queries into sub-questions a RoBERTa worker can answer, then recombines the answers. The interesting half was the evaluation: an STS-based framework that scores semantic agreement rather than exact match, so the decomposed pipeline could be compared honestly against single-model baselines.</p>
+        <sc-if value="{{ showImpactMetrics }}" hint-placeholder-val="{{ true }}">
+        <ul style="margin:0;padding-left:1.05em;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Manager and worker are separate, swappable models: the decomposition strategy is learned, not prompted.</li>
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Semantic-similarity scoring avoids the exact-match trap that flatters extractive baselines.</li>
+        </ul>
+        </sc-if>
+        <p style="font-size:14px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 58%, transparent);margin:var(--space-1) 0 0">Flan-T5 fine-tuning · RoBERTa · STS evaluation harness</p>
+      </div>
+    </article>
+
+    <article data-detail="yad2" style="display:none;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-accent">Pipeline → dashboard</span>
+          <span class="tag tag-neutral">6 GitHub stars</span>
+        </div>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(28px,3vw,38px);line-height:1.08;letter-spacing:-0.018em;margin:0">Yad2 Real-Estate Scraper</h2>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:17px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 74%, transparent);max-width:44ch">What does the Israeli housing market look like if you measure it yourself?</p>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">A scraper that turns live marketplace listings into a clean DataFrame and an Excel export, feeding an interactive Looker dashboard anyone can explore. The most-used thing I've published, and the reason I ended up writing about the techniques behind it.</p>
+        <sc-if value="{{ showImpactMetrics }}" hint-placeholder-val="{{ true }}">
+        <ul style="margin:0;padding-left:1.05em;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">End-to-end and public: scrape → structure → publish, with the dashboard live for anyone to poke at.</li>
+          <li style="font-size:15px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">Generalised past its first target: a reusable scraper module rather than one bespoke script.</li>
+        </ul>
+        </sc-if>
+        <p style="font-size:14px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 58%, transparent);margin:var(--space-1) 0 0">Python · pandas · Google Looker (Data Studio)</p>
+        <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:center">
+          <a class="btn btn-primary" href="https://github.com/Yam-Arieli/Yad2" target="_blank" rel="noopener">View the code →</a>
+        </div>
+      </div>
+    </article>
+
+    <article data-detail="writing" style="display:none;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-accent-2">Published</span>
+          <span class="tag tag-neutral">Python in Plain English</span>
+        </div>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,2.8vw,34px);line-height:1.1;letter-spacing:-0.018em;margin:0;max-width:30ch">Mastering Web Scraping: The Untold Techniques They Don't Teach You</h2>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">The practical layer nobody documents: the header and session tricks, the request patterns, the failure modes you only meet in production. Written after the Yad2 scraper had to survive real traffic.</p>
+        <a class="btn btn-primary" style="width:fit-content" href="https://medium.com/python-in-plain-english/mastering-web-scraping-the-untold-techniques-they-dont-teach-you-b1d65e8c1f07" target="_blank" rel="noopener">Read on Medium →</a>
+      </div>
+      <figure style="margin:0;min-width:0">
+        <img src="assets/scraping-tutorial-demo.png" alt="Browser DevTools network panel showing a Zillow search request's JSON response, with an arrow pointing from a listing back to the underlying API data" style="display:block;width:100%;aspect-ratio:16/10;object-fit:contain;background:var(--color-bg);border-radius:var(--radius-md);box-shadow:var(--shadow-sm)" />
+      </figure>
+    </article>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showImpactMetrics&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;showWriting&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  state = { connectOpen: false };
+  connectMenuRef = React.createRef();
+  toggleConnect = () => this.setState(s => ({ connectOpen: !s.connectOpen }));
+  closeConnect = () => this.setState({ connectOpen: false });
+  handleDocClick = (e) => {
+    if (this.connectMenuRef.current && !this.connectMenuRef.current.contains(e.target)) this.setState({ connectOpen: false });
+  };
+  backdropRef = React.createRef();
+  backRef = React.createRef();
+
+  componentDidMount() {
+    this.onKey = (e) => {
+      if (e.key === 'Escape' && this.backdropRef.current && this.backdropRef.current.style.display === 'block') {
+        this.closeDetail();
+      }
+    };
+    document.addEventListener('keydown', this.onKey);
+    document.addEventListener('mousedown', this.handleDocClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKey);
+    document.removeEventListener('mousedown', this.handleDocClick);
+    document.body.style.overflow = '';
+  }
+
+  openDetail(key) {
+    document.querySelectorAll('[data-detail]').forEach(el => {
+      el.style.display = el.dataset.detail === key ? 'grid' : 'none';
+    });
+    const back = this.backdropRef.current;
+    if (back) {
+      back.style.display = 'block';
+      back.scrollTop = 0;
+    }
+    document.body.style.overflow = 'hidden';
+    if (this.backRef.current) this.backRef.current.focus();
+  }
+
+  closeDetail = () => {
+    const back = this.backdropRef.current;
+    if (back) back.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  onGridClick = (e) => {
+    const tile = e.target && e.target.closest ? e.target.closest('[data-open]') : null;
+    if (tile) this.openDetail(tile.dataset.open);
+  };
+
+  onGridKey = (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const tile = e.target && e.target.closest ? e.target.closest('[data-open]') : null;
+    if (tile) { e.preventDefault(); this.openDetail(tile.dataset.open); }
+  };
+
+  onBackdropClick = (e) => {
+    if (!e.target.closest('[data-panel-shell]')) this.closeDetail();
+  };
+
+  renderVals() {
+    const connectOpen = this.state.connectOpen;
+    return {
+      connectMenuRef: this.connectMenuRef,
+      connectOpen,
+      toggleConnect: this.toggleConnect,
+      closeConnect: this.closeConnect,
+      chevronTransform: connectOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      menuTransform: connectOpen ? 'translateY(0)' : 'translateY(-8px)',
+      menuOpacity: connectOpen ? 1 : 0,
+      menuPointerEvents: connectOpen ? 'auto' : 'none',
+      backdropRef: this.backdropRef,
+      backRef: this.backRef,
+      closeDetail: this.closeDetail,
+      onGridClick: this.onGridClick,
+      onGridKey: this.onGridKey,
+      onBackdropClick: this.onBackdropClick,
+      showImpactMetrics: this.props.showImpactMetrics ?? true,
+      showWriting: this.props.showWriting ?? true,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

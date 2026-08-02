@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Education & Research - Yam Arieli</title>
+<meta name="description" content="MSc thesis at the Hebrew University of Jerusalem on recovering systemic programs from a single snapshot, plus notable BSc coursework.">
+<meta property="og:title" content="Education & Research - Yam Arieli">
+<meta property="og:description" content="MSc thesis at the Hebrew University of Jerusalem on recovering systemic programs from a single snapshot, plus notable BSc coursework.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/yam-photo.jpeg">
+<meta name="twitter:card" content="summary">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-1d3d64b4-4e2e-4fc4-9a4f-b6c842836753/styles.css">
+<script src="_ds/broadsheet-1d3d64b4-4e2e-4fc4-9a4f-b6c842836753/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+:root {
+  --sim-green: #1c7d55;   /* Y-signature found in X's response */
+  --sim-orange: #c96a12;  /* X-signature found in Y's response */
+}
+a:hover { color: var(--color-accent-700); }
+#dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; }
+/* The detail sheet is sized per panel. The MSc panels and the simulator are
+   tuned to the narrower sheet; the BSc course figures are line diagrams that
+   only read at size, so those panels get a wider one. */
+[data-panel-shell] { width: min(760px, 100%); }
+[data-panel-shell][data-wide="1"] { width: min(1060px, 100%); }
+@media (max-width: 760px) {
+  [data-detail^="bsc-"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 560px) {
+  [data-msc-grid] { grid-template-columns: 1fr !important; }
+}
+.connect-trigger:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.connect-row:hover { background: var(--color-accent-100); }
+@keyframes om-pop { from { opacity: 0; transform: translateY(14px) scale(0.975); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes om-veil { from { opacity: 0; } to { opacity: 1; } }
+/* Narrow screens: unstack the prose and give the readout and the plot the full
+   width, but keep the two vessels paired on one row so they stay comparable. */
+@media (max-width: 640px) {
+  [data-detail="simulator"] [data-sim="prose"] { grid-template-columns: 1fr !important; }
+  [data-detail="simulator"] [data-sim="panel"],
+  [data-detail="simulator"] [data-sim="plot"] { grid-column: 1 / -1 !important; }
+}
+</style>
+</helmet>
+<nav class="nav" style="position:sticky;top:0;z-index:50;max-width:1200px;margin:0 auto;padding:var(--space-4) clamp(20px,5vw,72px);background:var(--color-bg);flex-wrap:wrap;row-gap:var(--space-2)">
+  <span class="nav-brand">Yam Arieli</span>
+  <a href="index.dc.html">Home</a>
+  <a href="Experience.dc.html">Experience</a>
+  <a href="Education.dc.html" aria-current="page">Education</a>
+  <a href="Projects.dc.html">Projects</a>
+  <div class="connect-menu" ref="{{ connectMenuRef }}" style="position:relative">
+    <span class="connect-trigger" onClick="{{ toggleConnect }}" role="button" tabindex="0" aria-expanded="{{ connectOpen }}" style="cursor:pointer;font-size:14px;color:inherit;display:flex;align-items:center;gap:4px">Connect<svg width="10" height="10" viewBox="0 0 256 256" fill="currentColor" style="opacity:.6;transform:{{ chevronTransform }};transition:transform 220ms ease"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg></span>
+    <div class="card elev-md" style="position:absolute;top:calc(100% + var(--space-2));right:0;min-width:220px;z-index:60;padding:var(--space-2);transform-origin:top;transition:transform 220ms cubic-bezier(0.22,0.61,0.36,1), opacity 180ms ease;transform:{{ menuTransform }};opacity:{{ menuOpacity }};pointer-events:{{ menuPointerEvents }}">
+      <a class="connect-row" href="mailto:arieliyam111@gmail.com" onClick="{{ closeConnect }}" style="display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2);color:var(--color-text);text-decoration:none;font-size:14px;border-radius:var(--radius-md)"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" style="flex-shrink:0"><path opacity="0.25" d="M224,56V192a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V56Z"></path><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-19.09,16L128,133.15,51.09,64ZM216,192H40V74.19l82.59,74.11a8,8,0,0,0,10.82,0L216,74.19V192Z"></path></svg>Email</a>
+      <a class="connect-row" href="https://www.linkedin.com/in/yam-arieli/" target="_blank" rel="noopener" onClick="{{ closeConnect }}" style="display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2);color:var(--color-text);text-decoration:none;font-size:14px;border-radius:var(--radius-md)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>LinkedIn</a>
+      <a class="connect-row" href="https://github.com/Yam-Arieli" target="_blank" rel="noopener" onClick="{{ closeConnect }}" style="display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2);color:var(--color-text);text-decoration:none;font-size:14px;border-radius:var(--radius-md)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>GitHub</a>
+    </div>
+  </div>
+  <a class="btn btn-primary" role="button" aria-disabled="true" title="Résumé available on request" style="cursor:default">Résumé</a>
+</nav>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,72px)">
+
+  <section style="padding:clamp(24px,4vw,44px) 0 clamp(32px,5vw,56px)">
+    <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:26px;letter-spacing:-0.01em;margin:0 0 var(--space-2)">MSc Thesis</h2>
+    <p style="font-size:15.5px;line-height:1.6;max-width:60ch;color:color-mix(in srgb, var(--color-text) 78%, transparent);margin:0 0 var(--space-6)">The Hebrew University of Jerusalem · Computer Science</p>
+
+    <div data-msc-grid="1" aria-label="MSc thesis stages" onClick="{{ onGridClick }}" onKeyDown="{{ onGridKey }}" style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4)">
+
+      <article data-open="msc-gap" role="button" tabIndex="0" aria-label="Open details for the gap" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+        <span class="tag tag-accent" style="width:fit-content">01 · The gap</span>
+        <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:21px;line-height:1.15;letter-spacing:-0.01em;margin:2px 0 0">A single snapshot of a moving system</h3>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:14.5px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">scRNA-sequencing kills the cell to read it, so cascades that unfold over time only ever leave one frozen frame.</p>
+        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700);margin-top:auto;padding-top:var(--space-3)">Read the account →</span>
+      </article>
+
+      <article data-open="msc-idea" role="button" tabIndex="0" aria-label="Open details for the idea" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+        <span class="tag tag-accent" style="width:fit-content">02 · The idea</span>
+        <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:21px;line-height:1.15;letter-spacing:-0.01em;margin:2px 0 0">Infer direction without a time axis</h3>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:14.5px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">Recover how a systemic program unfolds over time, from the snapshot alone, no time-course experiments required.</p>
+        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700);margin-top:auto;padding-top:var(--space-3)">Read the account →</span>
+      </article>
+
+      <article data-open="msc-implementation" role="button" tabIndex="0" aria-label="Open details for the implementation" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+        <span class="tag tag-accent" style="width:fit-content">03 · Implementation</span>
+        <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:21px;line-height:1.15;letter-spacing:-0.01em;margin:2px 0 0">An attention-based MIL model</h3>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:14.5px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">Gradient-field integration, matrix normalization, and probabilistic gating over robust medians.</p>
+        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700);margin-top:auto;padding-top:var(--space-3)">Read the account →</span>
+      </article>
+
+      <article data-open="msc-results" role="button" tabIndex="0" aria-label="Open details for the results" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+        <span class="tag tag-accent" style="width:fit-content">04 · Results</span>
+        <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:21px;line-height:1.15;letter-spacing:-0.01em;margin:2px 0 0">83-100% accuracy</h3>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:14.5px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">Validated across diverse, real-world datasets.</p>
+        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700);margin-top:auto;padding-top:var(--space-3)">Read the account →</span>
+      </article>
+
+    </div>
+
+    <div style="display:flex;justify-content:center;padding-top:var(--space-4)">
+      <article data-open="simulator" onClick="{{ onGridClick }}" onKeyDown="{{ onGridKey }}" role="button" tabIndex="0" aria-label="Open the cytokine simulator" class="stack-phone" style="display:flex;align-items:stretch;gap:var(--space-5);width:min(760px,100%);min-height:200px;padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+        <div style="display:flex;flex-direction:column;gap:var(--space-2);flex:1;min-width:0;justify-content:center">
+          <span class="tag tag-accent" style="width:fit-content">Sandbox</span>
+          <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:21px;line-height:1.15;letter-spacing:-0.01em;margin:2px 0 0">Signal-cascade simulator</h3>
+          <p style="font-family:var(--font-body);font-style:italic;font-size:14.5px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent);max-width:36ch">A small interactive model of two vessels, cytokines, and how contact reshapes a drifting cell population.</p>
+          <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700);margin-top:auto;padding-top:var(--space-2)">Read the account →</span>
+        </div>
+        <div style="flex:0 0 auto;width:130px;height:130px;border-radius:var(--radius-md);overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)">
+          <canvas id="card-vessel-b" width="130" height="130" style="display:block;width:100%;height:100%"></canvas>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section style="padding:clamp(24px,5vw,48px) 0 clamp(32px,5vw,56px)">
+    <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:26px;letter-spacing:-0.01em;margin:0 0 var(--space-2)">BSc Coursework</h2>
+    <p style="font-size:15.5px;line-height:1.6;max-width:60ch;color:color-mix(in srgb, var(--color-text) 78%, transparent);margin:0 0 var(--space-6)">The Open University of Israel · Computer Science - a few notable courses.</p>
+
+    <div aria-label="Notable BSc courses" onClick="{{ onGridClick }}" onKeyDown="{{ onGridKey }}" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-4)">
+
+      <article data-open="bsc-robotics" role="button" tabIndex="0" aria-label="Open details for Algorithmic Robotics" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+        <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:21px;line-height:1.15;letter-spacing:-0.01em;margin:2px 0 0">Algorithmic Robotics</h3>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:14.5px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">Based on the first eight chapters of Lynch & Park's <em>Modern Robotics</em>.</p>
+        <span class="tag" style="width:fit-content;background:oklch(95% 0.05 152);color:oklch(32% 0.1 152);margin-top:auto">Score 98</span>
+        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+      </article>
+
+      <article data-open="bsc-datamining" role="button" tabIndex="0" aria-label="Open details for Data Mining" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+        <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:21px;line-height:1.15;letter-spacing:-0.01em;margin:2px 0 0">Data Mining</h3>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:14.5px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">Foundational course on extracting patterns and structure from data.</p>
+        <span class="tag" style="width:fit-content;background:oklch(95% 0.05 152);color:oklch(32% 0.1 152);margin-top:auto">Score 99</span>
+        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+      </article>
+
+      <article data-open="bsc-bigdata" role="button" tabIndex="0" aria-label="Open details for Algorithms For Big Data" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-lg);background:var(--color-neutral-200);cursor:pointer;outline-offset:2px;transform:translateY(0) scale(1);transition:background 200ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.22,0.61,0.36,1)" style-hover="background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateY(-6px) scale(1.02)">
+        <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:21px;line-height:1.15;letter-spacing:-0.01em;margin:2px 0 0">Algorithms For Big Data</h3>
+        <p style="font-family:var(--font-body);font-style:italic;font-size:14.5px;line-height:1.5;margin:0;color:color-mix(in srgb, var(--color-text) 72%, transparent)">Algorithmic techniques for data too large to fit in memory.</p>
+        <span class="tag" style="width:fit-content;background:oklch(95% 0.05 152);color:oklch(32% 0.1 152);margin-top:auto">Score 100</span>
+        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">Read the account →</span>
+      </article>
+
+    </div>
+  </section>
+
+  <section style="padding:clamp(40px,6vw,64px) 0 var(--space-6)">
+    <h3 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3.5vw,36px);letter-spacing:-0.015em;margin:0 0 var(--space-2);max-width:24ch">Have a data problem worth making clearer?</h3>
+    <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;align-items:center;margin-top:var(--space-4)">
+      <a class="btn btn-primary" href="mailto:arieliyam111@gmail.com">Email me</a>
+      <a href="https://www.linkedin.com/in/yam-arieli/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/Yam-Arieli" target="_blank" rel="noopener">GitHub</a>
+      <span style="color:color-mix(in srgb, var(--color-text) 55%, transparent)" title="Résumé available on request">Résumé</span>
+    </div>
+  </section>
+
+  <footer style="padding:var(--space-6) 0 var(--space-8);font-size:13px;color:color-mix(in srgb, var(--color-text) 65%, transparent)">© 2026 Yam Arieli</footer>
+</div>
+
+<div ref="{{ backdropRef }}" onClick="{{ onBackdropClick }}" role="dialog" aria-modal="true" aria-label="Detail" style="display:none;position:fixed;inset:0;z-index:200;background:color-mix(in srgb, #201e1d 46%, transparent);padding:clamp(16px,4vh,48px) clamp(16px,4vw,48px);overflow-y:auto;animation:om-veil 180ms ease both">
+  <div data-panel-shell="1" style="margin:0 auto;background:var(--color-neutral-100);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:clamp(20px,3vw,40px);animation:om-pop 260ms cubic-bezier(0.22,0.61,0.36,1) both">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-6)">
+      <div style="display:flex;align-items:center;gap:var(--space-3)">
+        <button ref="{{ backRef }}" type="button" class="btn btn-secondary" onClick="{{ closeDetail }}">← Back</button>
+        <button ref="{{ nextRef }}" type="button" class="btn btn-secondary" style="display:none">Next →</button>
+      </div>
+      <span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 55%, transparent)">Detail</span>
+    </div>
+
+    <article data-detail="msc-gap" style="display:none;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <span class="tag tag-accent" style="width:fit-content">01 · The gap</span>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3vw,34px);line-height:1.12;letter-spacing:-0.016em;margin:0">A single snapshot of a moving system</h2>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">Cascades of the immune system are important to understand: one signaling state triggers the next in a defined order. But most of our single-cell RNA-sequencing data comes from a single time snapshot, because the sequencing process kills the cell as it reads it. There's no way to sequence the same cell twice and watch it move through the cascade, every dataset is one frozen frame, with no time axis to read directly off the data.</p>
+      </div>
+    </article>
+
+    <article data-detail="msc-idea" style="display:none;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <span class="tag tag-accent" style="width:fit-content">02 · The idea</span>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3vw,34px);line-height:1.12;letter-spacing:-0.016em;margin:0">Infer direction without a time axis</h2>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">A methodology to infer how systemic programs unfold directionally over time from a single static snapshot, bypassing the need for time-course experiments or domain-specific priors altogether.</p>
+      </div>
+    </article>
+
+    <article data-detail="msc-implementation" style="display:none;grid-template-columns:1fr;gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <span class="tag tag-accent" style="width:fit-content">03 · Implementation</span>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3vw,34px);line-height:1.12;letter-spacing:-0.016em;margin:0">An attention-based MIL model</h2>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">An interpretable, attention-based Multiple Instance Learning model recovers underlying systemic programs, extracting feature signatures via gradient-field integration and matrix normalization to isolate signal couplings from global artifacts. Probabilistic gating mechanisms over robust median aggregations then separate true signal cascades from stochastic noise.</p>
+      </div>
+      <figure style="margin:0;min-width:0">
+        <div style="width:100%;aspect-ratio:1470/348;border-radius:var(--radius-md);overflow:hidden;background:var(--color-neutral-100);box-shadow:var(--shadow-sm)">
+          <image-slot id="msc-implementation-image" shape="rect" fit="contain" src="assets/MSc_model_structure.png" placeholder="Drop a diagram of the model architecture here" style="position:relative"></image-slot>
+        </div>
+        <figcaption style="margin-top:var(--space-2);font-size:13px;font-style:italic;color:color-mix(in srgb, var(--color-text) 65%, transparent)">Model architecture: per-cell encoding, attention-weighted pooling, and linear classification over the pooled tube vector</figcaption>
+      </figure>
+    </article>
+
+    <article data-detail="msc-results" style="display:none;grid-template-columns:1fr;gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <span class="tag tag-accent" style="width:fit-content">04 · Results</span>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3vw,34px);line-height:1.12;letter-spacing:-0.016em;margin:0">83-100% accuracy</h2>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">The framework validated at 83-100% accuracy across diverse, real-world datasets.</p>
+      </div>
+      <figure style="margin:0;min-width:0">
+        <div style="width:100%;aspect-ratio:832/792;border-radius:var(--radius-md);overflow:hidden;background:var(--color-neutral-100);box-shadow:var(--shadow-sm)">
+          <image-slot id="msc-results-image" shape="rect" fit="contain" src="assets/MSc_results.png" placeholder="Drop the results chart or benchmark figure here" style="position:relative"></image-slot>
+        </div>
+        <figcaption style="margin-top:var(--space-2);font-size:13px;font-style:italic;color:color-mix(in srgb, var(--color-text) 65%, transparent)">Sign of the recovered cross-cascade asymmetry checked against the pre-registered direction across three independent datasets: human PBMC, mouse BMDM, and mouse lymph node in vivo</figcaption>
+      </figure>
+    </article>
+
+    <article data-detail="bsc-robotics" style="display:none;grid-template-columns:minmax(240px,13fr) minmax(280px,12fr);gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3vw,34px);line-height:1.12;letter-spacing:-0.016em;margin:0">Algorithmic Robotics</h2>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">Configuration spaces, forward and inverse kinematics, statics, and the dynamics of robotic arms: the first eight chapters of Lynch, Kevin M. and Frank C. Park, <em>Modern Robotics</em>, Cambridge University Press, 2017. Describing a system by the space of states it can occupy, and reading motion as a field over that space, is the same machinery my thesis reuses to recover direction by integrating a gradient field.</p>
+        <a class="btn btn-primary" style="width:fit-content" href="https://www.openu.ac.il/courses/20944.htm?t=h" target="_blank" rel="noopener">Course page →</a>
+        <span class="tag" style="width:fit-content;background:oklch(95% 0.05 152);color:oklch(32% 0.1 152)">Score 98</span>
+      </div>
+      <figure style="margin:0;min-width:0">
+        <div style="width:100%;aspect-ratio:1033/748;border-radius:var(--radius-md);overflow:hidden;background:var(--color-neutral-100);box-shadow:var(--shadow-sm)">
+          <image-slot id="bsc-robotics-image" shape="rect" fit="contain" src="assets/course-robotics-scara.png" placeholder="Drop a figure here" style="position:relative"></image-slot>
+        </div>
+        <figcaption style="margin-top:var(--space-2);font-size:13px;font-style:italic;color:color-mix(in srgb, var(--color-text) 65%, transparent)">SCARA robot</figcaption>
+      </figure>
+    </article>
+
+    <article data-detail="bsc-datamining" style="display:none;grid-template-columns:minmax(240px,13fr) minmax(280px,12fr);gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3vw,34px);line-height:1.12;letter-spacing:-0.016em;margin:0">Data Mining</h2>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">The whole pipeline: data cleaning, classification and decision trees, Bayesian and instance-based learning, association rules, cluster analysis and feature selection. It is the course closest to the three years that followed it: my role at the Prime Minister's Office was titled Data Mining &amp; Analysis, and clustering and feature selection are still what precede every model in my thesis.</p>
+        <a class="btn btn-primary" style="width:fit-content" href="https://www.openu.ac.il/courses/20595.htm?t=h" target="_blank" rel="noopener">Course page →</a>
+        <span class="tag" style="width:fit-content;background:oklch(95% 0.05 152);color:oklch(32% 0.1 152)">Score 99</span>
+      </div>
+      <figure style="margin:0;min-width:0">
+        <div style="width:100%;aspect-ratio:479/224;border-radius:var(--radius-md);overflow:hidden;background:var(--color-neutral-100);box-shadow:var(--shadow-sm)">
+          <image-slot id="bsc-datamining-image" shape="rect" fit="contain" src="assets/course-datamining-hclust.png" placeholder="Drop a figure here" style="position:relative"></image-slot>
+        </div>
+        <figcaption style="margin-top:var(--space-2);font-size:13px;font-style:italic;color:color-mix(in srgb, var(--color-text) 65%, transparent)">Hierarchical Clustering</figcaption>
+      </figure>
+    </article>
+
+    <article data-detail="bsc-bigdata" style="display:none;grid-template-columns:minmax(240px,13fr) minmax(280px,12fr);gap:clamp(20px,3vw,40px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(26px,3vw,34px);line-height:1.12;letter-spacing:-0.016em;margin:0">Algorithms For Big Data</h2>
+        <p style="font-size:16px;line-height:1.7;margin:0;color:color-mix(in srgb, var(--color-text) 85%, transparent);max-width:52ch">Three computational models for data too large to hold: streaming algorithms that work in less memory than the input, sublinear-time algorithms that answer without reading all of it, and distributed and local computation. Both halves of my work sit here: ETLs at the PMO that had to process updates incrementally rather than reloading everything, and a thesis working over millions of cells with thousands of genes each.</p>
+        <a class="btn btn-primary" style="width:fit-content" href="https://www.openu.ac.il/courses/22934.htm?t=h" target="_blank" rel="noopener">Course page →</a>
+        <span class="tag" style="width:fit-content;background:oklch(95% 0.05 152);color:oklch(32% 0.1 152)">Score 100</span>
+      </div>
+      <figure style="margin:0;min-width:0">
+        <div style="width:100%;aspect-ratio:1044/707;border-radius:var(--radius-md);overflow:hidden;background:var(--color-neutral-100);box-shadow:var(--shadow-sm)">
+          <image-slot id="bsc-bigdata-image" shape="rect" fit="contain" src="assets/course-bigdata-cms.png" placeholder="Drop a figure here" style="position:relative"></image-slot>
+        </div>
+        <figcaption style="margin-top:var(--space-2);font-size:13px;font-style:italic;color:color-mix(in srgb, var(--color-text) 65%, transparent)">Count-Min Sketch</figcaption>
+      </figure>
+    </article>
+
+    <article data-detail="simulator" style="display:none;grid-template-columns:1fr 1fr;gap:var(--space-4);width:100%">
+      <div data-sim="head" style="grid-column:1 / -1;display:flex;flex-direction:column;gap:var(--space-3);min-width:0">
+        <span class="tag tag-accent" style="width:fit-content">Sandbox</span>
+        <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(20px,2.4vw,26px);line-height:1.15;letter-spacing:-0.014em;margin:0">Two vessels, one snapshot</h2>
+        <div data-sim="prose" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);font-size:14.5px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">
+          <p style="margin:0">Redness and squareness are two pseudo-effects a cytokine can leave on a cell. Redness stands for an immune response; squareness for a <em>controlled release</em> of one &mdash; a squared cell goes on to secrete cytokine Y itself. So X, which squares cells, drives Y downstream. Y reddens cells and squares them slightly too, but that slight squaring is incidental noise from a messy perturbation, not a signal being passed on. The cascade X &rarr; Y is real; Y &rarr; X is not.</p>
+          <p style="margin:0">All we get to observe is the cells &mdash; their redness and squareness, standing in for a gene-expression profile &mdash; and which cytokine we chose to inject into each vessel. The cytokines themselves are invisible: we never watch one bind, and we never see the Y a cell secretes. That hidden Y is precisely what we are trying to prove exists. So the plot reduces each vessel to one (squareness, redness) vector and drops each onto the other&rsquo;s axis; the gap between those two projections is the cascade, recovered from the cells alone.</p>
+        </div>
+      </div>
+
+      <div data-sim="panel" style="min-width:0;display:flex;flex-direction:column;gap:var(--space-3)">
+        <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
+          <button class="btn btn-primary" type="button" onClick="{{ popupInject }}" style="font-size:13px;padding:7px 12px">{{ popupInjectLabel }}</button>
+          <button class="btn btn-secondary" type="button" onClick="{{ popupToggleRun }}" style="font-size:13px;padding:7px 12px">{{ popupRunLabel }}</button>
+          <button class="btn btn-ghost" type="button" onClick="{{ popupReset }}" style="font-size:13px;padding:7px 12px">Reset</button>
+          <span style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 60%, transparent)">t = {{ popupTick }}</span>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:var(--space-2);padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-neutral-200)">
+          <p style="margin:0;font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 52%, transparent)">Each projection normalized to its own vessel&rsquo;s response, 0 &rarr; 1</p>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:0.02em;color:var(--sim-green)"><span>Y-signature in X</span><span style="font-variant-numeric:tabular-nums">{{ popupSigYinX }}</span></div>
+            <div style="position:relative;height:12px;margin-top:3px">
+              <div style="position:absolute;left:0;right:0;top:50%;height:1px;background:color-mix(in srgb, var(--color-text) 14%, transparent)"></div>
+              <div style="position:absolute;right:0;top:1px;bottom:1px;border-right:1px dashed color-mix(in srgb, var(--color-text) 30%, transparent)"></div>
+              <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:3px;width:{{ popupSigYinXPct }};background:var(--sim-green);opacity:{{ popupSigOpacity }};transition:width 220ms ease"></div>
+              <div style="position:absolute;left:{{ popupSigYinXPct }};top:50%;transform:translate(-100%,-50%);width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid var(--sim-green);opacity:{{ popupSigOpacity }};transition:left 220ms ease"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:0.02em;color:var(--sim-orange)"><span>X-signature in Y</span><span style="font-variant-numeric:tabular-nums">{{ popupSigXinY }}</span></div>
+            <div style="position:relative;height:12px;margin-top:3px">
+              <div style="position:absolute;left:0;right:0;top:50%;height:1px;background:color-mix(in srgb, var(--color-text) 14%, transparent)"></div>
+              <div style="position:absolute;right:0;top:1px;bottom:1px;border-right:1px dashed color-mix(in srgb, var(--color-text) 30%, transparent)"></div>
+              <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:3px;width:{{ popupSigXinYPct }};background:var(--sim-orange);opacity:{{ popupSigOpacity }};transition:width 220ms ease"></div>
+              <div style="position:absolute;left:{{ popupSigXinYPct }};top:50%;transform:translate(-100%,-50%);width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid var(--sim-orange);opacity:{{ popupSigOpacity }};transition:left 220ms ease"></div>
+            </div>
+          </div>
+          <div style="position:relative;height:20px">
+            <div style="position:absolute;left:{{ popupDeltaLeft }};width:{{ popupDeltaWidth }};top:0;height:7px;border-left:1px solid color-mix(in srgb, var(--color-text) 45%, transparent);border-right:1px solid color-mix(in srgb, var(--color-text) 45%, transparent);border-bottom:1px dashed color-mix(in srgb, var(--color-text) 45%, transparent);opacity:{{ popupDeltaOpacity }};transition:left 220ms ease, width 220ms ease"></div>
+            <span style="position:absolute;left:{{ popupDeltaMid }};top:8px;transform:translateX(-50%);white-space:nowrap;font-size:12px;font-variant-numeric:tabular-nums;color:color-mix(in srgb, var(--color-text) 70%, transparent);opacity:{{ popupDeltaOpacity }};transition:left 220ms ease">&Delta; {{ popupDeltaVal }}</span>
+            <span style="position:absolute;right:0;top:8px;transform:translateX(50%);font-size:11px;color:color-mix(in srgb, var(--color-text) 45%, transparent)">1.0</span>
+          </div>
+          <p style="margin:0;font-size:12.5px;line-height:1.5;color:color-mix(in srgb, var(--color-text) 68%, transparent)">{{ popupVerdict }} <strong style="color:{{ popupVerdictColor }};font-weight:600">{{ popupVerdictCall }}</strong></p>
+        </div>
+      </div>
+
+      <div data-sim="plot" style="min-width:0">
+        <canvas id="popup-plot" width="420" height="420" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+      </div>
+
+      <figure style="margin:0;min-width:0;display:flex;flex-direction:column;gap:var(--space-2)">
+        <canvas id="popup-vessel-a" width="280" height="280" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+        <figcaption style="display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 65%, transparent)">
+          <span>Vessel A · cytokine Y only</span><span>r {{ popupARed }} · s {{ popupASq }}</span>
+        </figcaption>
+      </figure>
+      <figure style="margin:0;min-width:0;display:flex;flex-direction:column;gap:var(--space-2)">
+        <canvas id="popup-vessel-b" width="280" height="280" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+        <figcaption style="display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 65%, transparent)">
+          <span>Vessel B · cytokine X → Y</span><span>r {{ popupBRed }} · s {{ popupBSq }}</span>
+        </figcaption>
+      </figure>
+    </article>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { connectOpen: false };
+  connectMenuRef = React.createRef();
+  toggleConnect = () => this.setState(s => ({ connectOpen: !s.connectOpen }));
+  closeConnect = () => this.setState({ connectOpen: false });
+  handleDocClick = (e) => {
+    if (this.connectMenuRef.current && !this.connectMenuRef.current.contains(e.target)) this.setState({ connectOpen: false });
+  };
+  backdropRef = React.createRef();
+  backRef = React.createRef();
+  nextRef = React.createRef();
+
+  nextOrder = {
+    'msc-gap': 'msc-idea',
+    'msc-idea': 'msc-implementation',
+    'msc-implementation': 'msc-results',
+  };
+
+  componentDidMount() {
+    this.onKey = (e) => {
+      if (e.key === 'Escape' && this.backdropRef.current && this.backdropRef.current.style.display === 'block') {
+        this.closeDetail();
+      }
+    };
+    document.addEventListener('keydown', this.onKey);
+    document.addEventListener('mousedown', this.handleDocClick);
+
+    const cs = getComputedStyle(document.body);
+    this.ink = cs.getPropertyValue('--color-text').trim() || '#201e1d';
+    this.cyan = cs.getPropertyValue('--color-accent').trim() || '#0088b0';
+    this.mag = cs.getPropertyValue('--color-accent-2').trim() || '#d6006c';
+    this.green = cs.getPropertyValue('--sim-green').trim() || '#1c7d55';
+    this.orange = cs.getPropertyValue('--sim-orange').trim() || '#c96a12';
+
+    this.card = this.genVessel(9, 130);
+    this.addCyto(this.card, 'X', 21, 130, 7);
+    this.cardRaf = requestAnimationFrame(this.cardLoop);
+    this.cardTimer = setInterval(() => {
+      if (this.card && this.card.cyt.length < 40) this.addCyto(this.card, 'X', 1, 130);
+    }, 10000);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKey);
+    document.body.style.overflow = '';
+    if (this.cardRaf) cancelAnimationFrame(this.cardRaf);
+    if (this.cardTimer) clearInterval(this.cardTimer);
+    this.stopPopupSim();
+  }
+
+  mix(a, b, t) {
+    const h = s => [parseInt(s.slice(1, 3), 16), parseInt(s.slice(3, 5), 16), parseInt(s.slice(5, 7), 16)];
+    const A = h(a), B = h(b);
+    return 'rgb(' + A.map((x, i) => Math.round(x + (B[i] - x) * t)).join(',') + ')';
+  }
+
+  genVessel(count, W) {
+    const R = Math.max(3, Math.round(W * 0.03));
+    const cells = [];
+    for (let i = 0; i < count; i++) {
+      const ang = Math.random() * Math.PI * 2, sp = 0.18 + Math.random() * 0.14;
+      cells.push({
+        x: R + Math.random() * (W - 2 * R), y: R + Math.random() * (W - 2 * R),
+        vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, red: 0, sq: 0, flash: 0,
+      });
+    }
+    return { cells, cyt: [] };
+  }
+
+  // potentCount: for type 'X', exactly this many of the n cytokines (picked off the
+  // front of the batch, which is already in random order) will trigger a cell they
+  // meet to secrete Y. Omit it for incidental single additions, where a 1/3 chance
+  // per cytokine keeps the same long-run cascade rate as a 7-of-21 injection.
+  addCyto(vessel, type, n, W, potentCount) {
+    for (let i = 0; i < n; i++) {
+      const ang = Math.random() * Math.PI * 2, sp = 0.45 + Math.random() * 0.25;
+      const cyt = {
+        x: 6 + Math.random() * (W - 12), y: 6 + Math.random() * (W - 12),
+        vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, type, ignore: -1, imm: 0,
+      };
+      if (type === 'X') cyt.spawnsY = potentCount != null ? i < potentCount : Math.random() < (1 / 3);
+      vessel.cyt.push(cyt);
+    }
+  }
+
+  stepVessel(vessel, W, R) {
+    for (const p of vessel.cells) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < R) { p.x = R; p.vx *= -1; } else if (p.x > W - R) { p.x = W - R; p.vx *= -1; }
+      if (p.y < R) { p.y = R; p.vy *= -1; } else if (p.y > W - R) { p.y = W - R; p.vy *= -1; }
+      if (p.flash > 0) p.flash -= 1;
+    }
+    const born = [];
+    for (let i = vessel.cyt.length - 1; i >= 0; i--) {
+      const k = vessel.cyt[i];
+      k.x += k.vx; k.y += k.vy;
+      if (k.x < 3) { k.x = 3; k.vx *= -1; } else if (k.x > W - 3) { k.x = W - 3; k.vx *= -1; }
+      if (k.y < 3) { k.y = 3; k.vy *= -1; } else if (k.y > W - 3) { k.y = W - 3; k.vy *= -1; }
+      if (k.imm > 0) k.imm -= 1;
+      let hit = -1;
+      for (let j = 0; j < vessel.cells.length; j++) {
+        if (k.imm > 0 && j === k.ignore) continue;
+        const p = vessel.cells[j], dx = p.x - k.x, dy = p.y - k.y;
+        if (dx * dx + dy * dy < (R + 3.2) * (R + 3.2)) { hit = j; break; }
+      }
+      if (hit < 0) continue;
+      const p = vessel.cells[hit], amp = 0.5 + Math.random() * 0.4;
+      p.flash = 26;
+      if (k.type === 'Y') {
+        p.red = Math.min(1, p.red + amp * (1 - p.red));
+        p.sq = Math.min(1, p.sq + Math.random() * 0.1 * (1 - p.sq));
+      } else {
+        p.sq = Math.min(1, p.sq + amp * (1 - p.sq));
+        if (k.spawnsY) {
+          const ang = Math.random() * Math.PI * 2, sp = 0.45 + Math.random() * 0.25;
+          born.push({
+            x: Math.max(4, Math.min(W - 4, p.x + Math.cos(ang) * (R + 7))),
+            y: Math.max(4, Math.min(W - 4, p.y + Math.sin(ang) * (R + 7))),
+            vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, type: 'Y', ignore: hit, imm: 260,
+          });
+        }
+      }
+      vessel.cyt.splice(i, 1);
+    }
+    for (const b of born) vessel.cyt.push(b);
+  }
+
+  drawVesselCanvas(id, vessel, W, R) {
+    const cv = document.getElementById(id); if (!cv) return;
+    const g = cv.getContext('2d');
+    g.clearRect(0, 0, W, W);
+    g.fillStyle = '#fff'; g.fillRect(0, 0, W, W);
+    g.strokeStyle = this.ink; g.lineWidth = 1.5; g.strokeRect(0.75, 0.75, W - 1.5, W - 1.5);
+    for (const p of vessel.cells) {
+      g.beginPath();
+      const rad = R * (1 - 0.92 * p.sq);
+      if (g.roundRect) g.roundRect(p.x - R, p.y - R, 2 * R, 2 * R, rad);
+      else g.arc(p.x, p.y, R, 0, Math.PI * 2);
+      g.fillStyle = this.mix(this.cyan, this.mag, p.red);
+      g.globalAlpha = 0.9; g.fill(); g.globalAlpha = 1;
+      if (p.flash > 0) { g.strokeStyle = this.ink; g.lineWidth = 1; g.globalAlpha = p.flash / 26; g.stroke(); g.globalAlpha = 1; }
+    }
+    for (const k of vessel.cyt) {
+      g.fillStyle = k.type === 'Y' ? this.mag : this.ink;
+      if (k.type === 'Y') { g.beginPath(); g.arc(k.x, k.y, Math.max(2, R * 0.27), 0, Math.PI * 2); g.fill(); }
+      else { const s = Math.max(4, R * 0.47); g.fillRect(k.x - s / 2, k.y - s / 2, s, s); }
+    }
+  }
+
+  meansOf(vessel) {
+    let r = 0, s = 0;
+    for (const p of vessel.cells) { r += p.red; s += p.sq; }
+    return { r: r / vessel.cells.length, s: s / vessel.cells.length };
+  }
+
+  // Drop each vessel's vector onto the other's signature axis. Raw values are what the
+  // plot draws; the normalized cosines are what the delta readout compares, so a vessel
+  // that simply responds harder cannot fake a directional asymmetry.
+  projections(ma, mb) {
+    const la = Math.hypot(ma.s, ma.r), lb = Math.hypot(mb.s, mb.r);
+    const ok = la > 0.02 && lb > 0.02;
+    const green = ok ? mb.r / lb : 0, orange = ok ? ma.s / la : 0;
+    return { ok, rawGreen: mb.r, rawOrange: ma.s, green, orange, delta: green - orange };
+  }
+
+  drawPlotCanvas(id, S, ma, mb, trail, proj) {
+    const cv = document.getElementById(id); if (!cv) return;
+    const k = S / 280;
+    const g = cv.getContext('2d'), L = 44 * k, B = 40 * k, T = 16 * k, Rt = 16 * k;
+    const x = t => L + t * (S - L - Rt), y = t => (S - B) - t * (S - B - T);
+    g.clearRect(0, 0, S, S); g.fillStyle = '#fff'; g.fillRect(0, 0, S, S);
+    g.font = (11 * k).toFixed(1) + 'px "Source Serif 4", serif'; g.fillStyle = this.ink;
+    g.strokeStyle = 'rgba(32,30,29,0.14)'; g.lineWidth = 1;
+    for (const t of [0.25, 0.5, 0.75, 1]) {
+      g.beginPath(); g.moveTo(x(t), y(0)); g.lineTo(x(t), y(1)); g.stroke();
+      g.beginPath(); g.moveTo(x(0), y(t)); g.lineTo(x(1), y(t)); g.stroke();
+    }
+    g.strokeStyle = this.ink; g.lineWidth = 1.5;
+    g.beginPath(); g.moveTo(x(0), y(0)); g.lineTo(x(1), y(0)); g.moveTo(x(0), y(0)); g.lineTo(x(0), y(1)); g.stroke();
+    g.textAlign = 'center';
+    for (const t of [0, 0.5, 1]) g.fillText(t.toFixed(1), x(t), y(0) + 15 * k);
+    g.textAlign = 'right';
+    for (const t of [0.5, 1]) g.fillText(t.toFixed(1), x(0) - 6 * k, y(t) + 4 * k);
+    g.fillText('0.0', x(0) - 6 * k, y(0) + 4 * k);
+    g.textAlign = 'center';
+    g.fillText('X signature direction - squareness →', (x(0) + x(1)) / 2, S - 8 * k);
+    g.save(); g.translate(13 * k, (y(0) + y(1)) / 2); g.rotate(-Math.PI / 2); g.fillText('Y signature direction - redness →', 0, 0); g.restore();
+    for (const key of ['a', 'b']) {
+      g.fillStyle = key === 'a' ? this.mag : this.cyan; g.globalAlpha = 0.18;
+      for (const pt of trail[key]) { g.beginPath(); g.arc(x(pt[0]), y(pt[1]), 2 * k, 0, Math.PI * 2); g.fill(); }
+      g.globalAlpha = 1;
+    }
+    if (proj && proj.ok) {
+      // orthogonal projection guides: each vector's tip dropped onto the other's axis
+      g.strokeStyle = 'rgba(32,30,29,0.38)'; g.lineWidth = 1; g.setLineDash([4 * k, 4 * k]);
+      g.beginPath(); g.moveTo(x(mb.s), y(mb.r)); g.lineTo(x(0), y(mb.r)); g.stroke();
+      g.beginPath(); g.moveTo(x(ma.s), y(ma.r)); g.lineTo(x(ma.s), y(0)); g.stroke();
+      g.setLineDash([]);
+      // the two projections themselves: the quantities the delta compares
+      this.arrow(g, x(0) + 4 * k, y(0), x(0) + 4 * k, y(proj.rawGreen), this.green, '', k);
+      this.arrow(g, x(0), y(0) - 4 * k, x(proj.rawOrange), y(0) - 4 * k, this.orange, '', k);
+    }
+    this.arrow(g, x(0), y(0), x(ma.s), y(ma.r), this.mag, 'A', k);
+    this.arrow(g, x(0), y(0), x(mb.s), y(mb.r), this.cyan, 'B', k);
+    // the unstimulated reference: the control condition both vectors start from
+    g.strokeStyle = this.ink; g.fillStyle = this.ink; g.lineWidth = 1.2;
+    g.beginPath(); g.arc(x(0), y(0), 5 * k, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.arc(x(0), y(0), 2 * k, 0, Math.PI * 2); g.fill();
+  }
+
+  arrow(g, x0, y0, x1, y1, col, label, k) {
+    k = k || 1;
+    const dx = x1 - x0, dy = y1 - y0, len = Math.hypot(dx, dy);
+    g.strokeStyle = col; g.fillStyle = col; g.lineWidth = 2 * k;
+    if (len > 6 * k) {
+      const ux = dx / len, uy = dy / len, tipX = x1, tipY = y1;
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(tipX - ux * 8 * k, tipY - uy * 8 * k); g.stroke();
+      g.beginPath();
+      g.moveTo(tipX, tipY);
+      g.lineTo(tipX - (ux * 11 + uy * 5.5) * k, tipY - (uy * 11 - ux * 5.5) * k);
+      g.lineTo(tipX - (ux * 11 - uy * 5.5) * k, tipY - (uy * 11 + ux * 5.5) * k);
+      g.closePath(); g.fill();
+    } else if (label) { g.beginPath(); g.arc(x0, y0, 3.5 * k, 0, Math.PI * 2); g.fill(); }
+    if (!label) return;
+    g.font = 'italic ' + (14 * k).toFixed(1) + 'px "Source Serif 4", serif'; g.textAlign = 'left';
+    g.fillText(label, x1 + 8 * k, y1 - 6 * k);
+  }
+
+  cardLoop = () => {
+    this.cardRaf = requestAnimationFrame(this.cardLoop);
+    if (!this.card) return;
+    this.stepVessel(this.card, 130, Math.max(3, Math.round(130 * 0.03)));
+    this.drawVesselCanvas('card-vessel-b', this.card, 130, Math.max(3, Math.round(130 * 0.03)));
+  };
+
+  buildPopup() {
+    this.popup = { a: this.genVessel(16, 280), b: this.genVessel(16, 280), trail: { a: [], b: [] }, frame: 0 };
+    this.setState({ popupA: { r: 0, s: 0 }, popupB: { r: 0, s: 0 }, popupProj: null, popupRunning: true, popupInjected: false, popupTick: 0 });
+  }
+
+  startPopupSim() {
+    this.stopPopupSim();
+    this.buildPopup();
+    this.popupRaf = requestAnimationFrame(this.popupLoop);
+  }
+
+  stopPopupSim() {
+    if (this.popupRaf) cancelAnimationFrame(this.popupRaf);
+    if (this.popupTimer) clearInterval(this.popupTimer);
+    this.popupTimer = null;
+  }
+
+  popupInject = () => {
+    if (!this.popup) return;
+    this.addCyto(this.popup.a, 'Y', 21, 280);
+    this.addCyto(this.popup.b, 'X', 21, 280, 7);
+    this.setState({ popupInjected: true, popupRunning: true });
+  };
+  popupToggleRun = () => this.setState(s => ({ popupRunning: !s.popupRunning }));
+  popupReset = () => this.buildPopup();
+
+  popupLoop = () => {
+    this.popupRaf = requestAnimationFrame(this.popupLoop);
+    if (!this.popup) return;
+    if (this.state.popupRunning) { this.stepVessel(this.popup.a, 280, 8); this.stepVessel(this.popup.b, 280, 8); this.popup.frame++; }
+    const ma = this.meansOf(this.popup.a), mb = this.meansOf(this.popup.b);
+    this.drawVesselCanvas('popup-vessel-a', this.popup.a, 280, 8);
+    this.drawVesselCanvas('popup-vessel-b', this.popup.b, 280, 8);
+    if (this.state.popupRunning && this.popup.frame % 20 === 0) {
+      this.popup.trail.a.push([ma.s, ma.r]); this.popup.trail.b.push([mb.s, mb.r]);
+      if (this.popup.trail.a.length > 150) { this.popup.trail.a.shift(); this.popup.trail.b.shift(); }
+    }
+    const proj = this.projections(ma, mb);
+    this.drawPlotCanvas('popup-plot', 420, ma, mb, this.popup.trail, proj);
+    if (this.popup.frame % 12 === 0) {
+      this.setState({ popupTick: this.popup.frame, popupA: { r: ma.r, s: ma.s }, popupB: { r: mb.r, s: mb.s }, popupProj: proj });
+    }
+  };
+
+  openDetail(key) {
+    document.querySelectorAll('[data-detail]').forEach(el => {
+      const show = el.dataset.detail === key;
+      // Every panel lays out with its own grid-template-columns; flex here
+      // would silently ignore it and shrink-to-fit the figure.
+      el.style.display = show ? 'grid' : 'none';
+    });
+    const shell = document.querySelector('[data-panel-shell]');
+    if (shell) shell.dataset.wide = key.indexOf('bsc-') === 0 ? '1' : '0';
+    const back = this.backdropRef.current;
+    if (back) {
+      back.style.display = 'block';
+      back.scrollTop = 0;
+    }
+    document.body.style.overflow = 'hidden';
+    if (this.backRef.current) this.backRef.current.focus();
+    if (key === 'simulator') this.startPopupSim(); else this.stopPopupSim();
+
+    const next = this.nextOrder[key];
+    if (this.nextRef.current) {
+      if (next) {
+        this.nextRef.current.style.display = 'inline-flex';
+        this.nextRef.current.dataset.nextDetail = next;
+      } else {
+        this.nextRef.current.style.display = 'none';
+        delete this.nextRef.current.dataset.nextDetail;
+      }
+    }
+  }
+
+  closeDetail = () => {
+    const back = this.backdropRef.current;
+    if (back) back.style.display = 'none';
+    document.body.style.overflow = '';
+    this.stopPopupSim();
+  };
+
+  onGridClick = (e) => {
+    const tile = e.target && e.target.closest ? e.target.closest('[data-open]') : null;
+    if (tile) this.openDetail(tile.dataset.open);
+  };
+
+  onGridKey = (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const tile = e.target && e.target.closest ? e.target.closest('[data-open]') : null;
+    if (tile) { e.preventDefault(); this.openDetail(tile.dataset.open); }
+  };
+
+  onBackdropClick = (e) => {
+    const nextBtn = e.target.closest('[data-next-detail]');
+    if (nextBtn) { this.openDetail(nextBtn.dataset.nextDetail); return; }
+    if (!e.target.closest('[data-panel-shell]')) this.closeDetail();
+  };
+
+  simEps = 0.1;
+
+  renderVals() {
+    const connectOpen = this.state.connectOpen;
+    const proj = this.state.popupProj || { ok: false, green: 0, orange: 0, delta: 0 };
+    const pct = v => (Math.max(0, Math.min(1, v)) * 100).toFixed(1) + '%';
+    const lo = Math.min(proj.green, proj.orange), hi = Math.max(proj.green, proj.orange);
+    const d = proj.delta, eps = this.simEps;
+    let verdict, call = '', callColor = 'var(--color-text)';
+    if (!proj.ok) {
+      verdict = 'Inject cytokines to compare the two responses.';
+    } else if (Math.abs(d) < eps) {
+      verdict = 'Δ = ' + d.toFixed(2) + ', below ε = ' + eps.toFixed(2) + ', no directional evidence yet.';
+    } else if (d > 0) {
+      verdict = 'Δ = ' + d.toFixed(2) + ' ≫ ε: Y’s signature is present in X’s response, while X’s is absent from Y’s:';
+      call = 'X → Y'; callColor = 'var(--sim-green)';
+    } else {
+      verdict = 'Δ = ' + d.toFixed(2) + ' ≪ −ε: X’s signature is present in Y’s response, while Y’s is absent from X’s:';
+      call = 'Y → X'; callColor = 'var(--sim-orange)';
+    }
+    return {
+      connectMenuRef: this.connectMenuRef,
+      connectOpen,
+      toggleConnect: this.toggleConnect,
+      closeConnect: this.closeConnect,
+      chevronTransform: connectOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      menuTransform: connectOpen ? 'translateY(0)' : 'translateY(-8px)',
+      menuOpacity: connectOpen ? 1 : 0,
+      menuPointerEvents: connectOpen ? 'auto' : 'none',
+      backdropRef: this.backdropRef,
+      backRef: this.backRef,
+      nextRef: this.nextRef,
+      closeDetail: this.closeDetail,
+      onGridClick: this.onGridClick,
+      onGridKey: this.onGridKey,
+      onBackdropClick: this.onBackdropClick,
+      popupARed: (this.state.popupA ? this.state.popupA.r : 0).toFixed(2),
+      popupASq: (this.state.popupA ? this.state.popupA.s : 0).toFixed(2),
+      popupBRed: (this.state.popupB ? this.state.popupB.r : 0).toFixed(2),
+      popupBSq: (this.state.popupB ? this.state.popupB.s : 0).toFixed(2),
+      popupInject: this.popupInject,
+      popupToggleRun: this.popupToggleRun,
+      popupReset: this.popupReset,
+      popupInjectLabel: this.state.popupInjected ? 'Inject more cytokines' : 'Inject cytokines',
+      popupRunLabel: this.state.popupRunning ? 'Pause' : 'Play',
+      popupTick: this.state.popupTick || 0,
+      popupSigYinX: proj.ok ? proj.green.toFixed(2) : '-',
+      popupSigXinY: proj.ok ? proj.orange.toFixed(2) : '-',
+      popupSigYinXPct: pct(proj.green),
+      popupSigXinYPct: pct(proj.orange),
+      popupDeltaLeft: pct(lo),
+      popupDeltaWidth: pct(hi - lo),
+      popupDeltaMid: pct((lo + hi) / 2),
+      popupDeltaVal: (d >= 0 ? '+' : '−') + Math.abs(d).toFixed(2),
+      popupSigOpacity: proj.ok ? 1 : 0,
+      popupDeltaOpacity: proj.ok && Math.abs(d) > 0.01 ? 1 : 0,
+      popupVerdict: verdict,
+      popupVerdictCall: call,
+      popupVerdictColor: callColor,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
