@@ -485,7 +485,7 @@ class Component extends DCLogic {
     const g = f.ctx, w = f.w, h = f.h;
     if (!w || !h) return;
     g.clearRect(0, 0, w, h);
-    const step = 12, reach = 230, base = 0.7, peak = 2.9;
+    const step = 12, reach = 230, base = 0.7, peak = 1.9;
     for (let y = step * 0.6; y < h; y += step) {
       for (let x = step * 0.6; x < w; x += step) {
         const dx = x - f.mx, dy = y - f.my;
@@ -499,7 +499,7 @@ class Component extends DCLogic {
         g.beginPath();
         g.arc(px, py, r, 0, 6.2832);
         g.fillStyle = this.ink;
-        g.globalAlpha = 0.12 + 0.26 * t;
+        g.globalAlpha = 0.12 + 0.09 * t;
         g.fill();
       }
     }
