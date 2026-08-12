@@ -20,6 +20,7 @@ download link. Do not re-add a CV file or wire those back up unless asked.
 | File | Role |
 | --- | --- |
 | `index.dc.html`, `Experience.dc.html`, `Education.dc.html`, `Projects.dc.html` | the four pages — **edit these** |
+| `Simulator.dc.html` | standalone page for the signal-cascade simulator (see below) |
 | `support.js` | Claude Design client runtime: renders `<x-dc>` elements and `{{ … }}` bindings |
 | `image-slot.js` | image crop/zoom handling for `.image-slots.state.json` |
 | `_ds/broadsheet-*/` | the Broadsheet design system (`styles.css` + `readme.md`) |
@@ -28,8 +29,22 @@ download link. Do not re-add a CV file or wire those back up unless asked.
 
 Untracked leftovers: `index.html`, `Experience.html`, `Education.html`, `Projects.html` are
 an older export kept on disk only as a reference (the `Experience` page in particular had a
-longer prose version there before it was condensed). `Simulator.dc.html` and
-`index-backup.dc.html` are unused and not built.
+longer prose version there before it was condensed). `index-backup.dc.html` is unused and
+not built.
+
+### The standalone simulator page
+
+`Simulator.dc.html` → **https://yam-arieli.github.io/Simulator.html**. It exists for talks:
+a link you can open full-screen, screen-record, or embed in a slide, without navigating the
+Education page and clicking the simulator card open. It is not linked from the nav; only the
+Education page is (and this page links back).
+
+It hosts the **same** simulator as the `data-detail="simulator"` panel in
+`Education.dc.html` — same physics, same `popup*` method and binding names, deliberately
+copied rather than rewritten. Two differences, both for projection: a three-up layout
+(vessels | plot | readout) that fits one screen, and canvases backed at 2× the simulation
+world (vessels 560 for a 280 world, plot 840), which `drawVesselCanvas` handles by scaling
+the context. **When you change the simulator in one file, change it in the other.**
 
 ## Edit loop
 
@@ -43,7 +58,7 @@ python3 -m http.server 8000 -d dist
 git commit -am "…" && git push      # Actions deploys within ~1 min
 ```
 
-`build.sh` copies the four pages into `dist/`, rewriting internal `X.dc.html` links to
+`build.sh` copies the five pages into `dist/`, rewriting internal `X.dc.html` links to
 `X.html`, and adds `.nojekyll` (without it Jekyll strips `_ds/` and the site loses all
 styling).
 

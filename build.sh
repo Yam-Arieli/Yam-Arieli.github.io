@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 
 rm -rf dist && mkdir -p dist
 
-for page in index Experience Education Projects; do
+for page in index Experience Education Projects Simulator; do
   sed 's/\.dc\.html"/.html"/g' "$page.dc.html" > "dist/$page.html"
 done
 

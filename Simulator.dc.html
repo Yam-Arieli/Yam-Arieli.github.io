@@ -3,191 +3,138 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal-cascade simulator - Yam Arieli</title>
+<meta name="description" content="Two vessels, one snapshot: an interactive simulation of recovering a cytokine cascade from cell state alone.">
+<meta property="og:title" content="Signal-cascade simulator - Yam Arieli">
+<meta property="og:description" content="Two vessels, one snapshot: an interactive simulation of recovering a cytokine cascade from cell state alone.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
+
 <helmet>
 <link rel="stylesheet" href="_ds/broadsheet-1d3d64b4-4e2e-4fc4-9a4f-b6c842836753/styles.css">
 <script src="_ds/broadsheet-1d3d64b4-4e2e-4fc4-9a4f-b6c842836753/_ds_bundle.js"></script>
 <style>
+:root {
+  --sim-green: #1c7d55;   /* Y-signature found in X's response */
+  --sim-orange: #c96a12;  /* X-signature found in Y's response */
+}
 a:hover { color: var(--color-accent-700); }
+#dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; }
+/* Presentation layout: on a projector the three readouts sit side by side so the
+   whole argument is on screen at once — vessels, plot, verdict. Below that the
+   grid falls back to the stacked arrangement the detail sheet uses on the site. */
+@media (max-width: 1180px) {
+  [data-sim-page] { grid-template-columns: 1fr 1fr !important; }
+  /* Paired on one row so they stay comparable, but capped: stretched to half the
+     page the vessels dwarf the plot that reads them. */
+  [data-sim="vessels"] { grid-column: 1 / -1 !important; flex-direction: row !important; }
+  [data-sim="vessels"] figure { max-width: 320px; }
+  [data-sim="head"] { grid-template-columns: 1fr !important; align-items: start !important; }
+}
+@media (max-width: 720px) {
+  [data-sim-page] { grid-template-columns: 1fr !important; }
+  [data-sim="prose"] { grid-template-columns: 1fr !important; }
+}
 </style>
 </helmet>
 
-<div style="max-width:1200px;margin:0 auto;padding:clamp(24px,4vw,56px) clamp(20px,5vw,72px) var(--space-8);font-family:var(--font-body)">
+<main style="max-width:1400px;margin:0 auto;padding:clamp(16px,2vw,28px) clamp(20px,4vw,56px)">
+  <article data-sim-page style="display:grid;grid-template-columns:minmax(0,0.62fr) minmax(0,1.27fr) minmax(0,1fr);gap:clamp(16px,2vw,32px);align-items:start;width:100%">
 
-  <span style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:var(--space-3)">Development sandbox · signal-cascade simulator</span>
-  <h1 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(32px,4.4vw,52px);line-height:1.08;letter-spacing:-0.02em;margin:0 0 var(--space-3);max-width:26ch">Two vessels, one snapshot.</h1>
-  <p style="font-size:17px;line-height:1.7;max-width:66ch;color:color-mix(in srgb, var(--color-text) 82%, transparent);margin:0">Cells drift in both vessels. Vessel A receives only cytokine Y, which reddens what it touches. Vessel B receives cytokine X, which squares what it touches — and sometimes releases a Y downstream. The plot below reads each vessel as a single vector in (squareness, redness), the population state a static snapshot would report.</p>
-
-  <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center;margin:var(--space-6) 0 var(--space-6)">
-    <button class="btn btn-primary" type="button" onClick="{{ inject }}">{{ injectLabel }}</button>
-    <button class="btn btn-secondary" type="button" onClick="{{ toggleRun }}">{{ runLabel }}</button>
-    <button class="btn btn-ghost" type="button" onClick="{{ reset }}">Reset</button>
-    <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 60%, transparent)">t = {{ tick }}</span>
-  </div>
-
-  <div style="margin-bottom:var(--space-6)">
-    <span style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:var(--space-4)">Legend</span>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--space-4) clamp(24px,4vw,56px);max-width:1060px;font-size:14.5px;line-height:1.55;color:color-mix(in srgb, var(--color-text) 82%, transparent)">
-      <span>Cell — drifts freely, starts blue and circular.</span>
-      <span>Cytokine Y — reddens a cell on contact, amplitude 0.5–0.9, plus a faint squaring of 0–0.1.</span>
-      <span>Cytokine X — squares a cell on contact, amplitude 0.5–0.9, and releases a Y outward with probability {{ spawnProbLabel }}.</span>
-      <span>A cytokine is consumed by the contact that transforms it.</span>
+    <div data-sim="head" style="grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,0.62fr) minmax(0,2.35fr);gap:clamp(16px,2vw,32px);align-items:end;min-width:0">
+      <div style="display:flex;flex-direction:column;gap:var(--space-2);min-width:0">
+        <span class="tag tag-accent" style="width:fit-content">Sandbox</span>
+        <h1 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(22px,2.5vw,32px);line-height:1.12;letter-spacing:-0.018em;margin:0">Two vessels, one snapshot</h1>
+      </div>
+      <div data-sim="prose" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);font-size:14.5px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">
+        <p style="margin:0">Redness and squareness are two pseudo-effects a cytokine can leave on a cell. Redness stands for an immune response; squareness for a <em>controlled release</em> of one &mdash; a squared cell goes on to secrete cytokine Y itself. So X, which squares cells, drives Y downstream. Y reddens cells and squares them slightly too, but that slight squaring is incidental noise from a messy perturbation, not a signal being passed on. The cascade X &rarr; Y is real; Y &rarr; X is not.</p>
+        <p style="margin:0">All we get to observe is the cells &mdash; their redness and squareness, standing in for a gene-expression profile &mdash; and which cytokine we chose to inject into each vessel. The cytokines themselves are invisible: we never watch one bind, and we never see the Y a cell secretes. That hidden Y is precisely what we are trying to prove exists. So the plot reduces each vessel to one (squareness, redness) vector and drops each onto the other&rsquo;s axis; the gap between those two projections is the cascade, recovered from the cells alone.</p>
+      </div>
     </div>
-  </div>
 
-  <div style="display:flex;gap:clamp(24px,4vw,56px);flex-wrap:wrap;align-items:flex-start">
+    <div data-sim="vessels" style="min-width:0;display:flex;flex-direction:column;gap:var(--space-3)">
+      <figure style="margin:0;min-width:0;flex:1;display:flex;flex-direction:column;gap:var(--space-2)">
+        <canvas id="popup-vessel-a" width="560" height="560" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+        <figcaption style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 65%, transparent)">
+          <span>Vessel A · cytokine Y only</span><span>r {{ popupARed }} · s {{ popupASq }}</span>
+        </figcaption>
+      </figure>
+      <figure style="margin:0;min-width:0;flex:1;display:flex;flex-direction:column;gap:var(--space-2)">
+        <canvas id="popup-vessel-b" width="560" height="560" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+        <figcaption style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 65%, transparent)">
+          <span>Vessel B · cytokine X → Y</span><span>r {{ popupBRed }} · s {{ popupBSq }}</span>
+        </figcaption>
+      </figure>
+    </div>
 
-    <figure style="margin:0;flex:0 1 auto">
-      <figcaption style="display:flex;align-items:baseline;gap:var(--space-3);margin-bottom:var(--space-3)">
-        <span style="font-family:var(--font-heading);font-size:20px;font-weight:var(--font-heading-weight)">Vessel A</span>
-        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-2-700)">cytokine Y only</span>
-      </figcaption>
-      <canvas id="sim-a" width="380" height="380" style="display:block;width:380px;height:380px;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
-      <div style="display:flex;gap:var(--space-5);margin-top:var(--space-3);font-size:14px;color:color-mix(in srgb, var(--color-text) 78%, transparent)">
-        <span>redness <strong style="font-family:var(--font-heading)">{{ aRed }}</strong></span>
-        <span>squareness <strong style="font-family:var(--font-heading)">{{ aSq }}</strong></span>
-        <span>free cytokines <strong style="font-family:var(--font-heading)">{{ aFree }}</strong></span>
+    <div data-sim="plot" style="min-width:0">
+      <canvas id="popup-plot" width="840" height="840" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+    </div>
+
+    <div data-sim="panel" style="min-width:0;display:flex;flex-direction:column;gap:var(--space-3)">
+      <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
+        <button class="btn btn-primary" type="button" onClick="{{ popupInject }}" style="font-size:13px;padding:7px 12px">{{ popupInjectLabel }}</button>
+        <button class="btn btn-secondary" type="button" onClick="{{ popupToggleRun }}" style="font-size:13px;padding:7px 12px">{{ popupRunLabel }}</button>
+        <button class="btn btn-ghost" type="button" onClick="{{ popupReset }}" style="font-size:13px;padding:7px 12px">Reset</button>
+        <span style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 60%, transparent)">t = {{ popupTick }}</span>
       </div>
-    </figure>
 
-    <figure style="margin:0;flex:0 1 auto">
-      <figcaption style="display:flex;align-items:baseline;gap:var(--space-3);margin-bottom:var(--space-3)">
-        <span style="font-family:var(--font-heading);font-size:20px;font-weight:var(--font-heading-weight)">Vessel B</span>
-        <span style="font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-accent-700)">cytokine X → Y cascade</span>
-      </figcaption>
-      <canvas id="sim-b" width="380" height="380" style="display:block;width:380px;height:380px;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
-      <div style="display:flex;gap:var(--space-5);margin-top:var(--space-3);font-size:14px;color:color-mix(in srgb, var(--color-text) 78%, transparent)">
-        <span>redness <strong style="font-family:var(--font-heading)">{{ bRed }}</strong></span>
-        <span>squareness <strong style="font-family:var(--font-heading)">{{ bSq }}</strong></span>
-        <span>free cytokines <strong style="font-family:var(--font-heading)">{{ bFree }}</strong></span>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:var(--space-2);padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-neutral-200)">
+        <p style="margin:0;font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 52%, transparent)">Each projection normalized to its own vessel&rsquo;s response, 0 &rarr; 1</p>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:0.02em;color:var(--sim-green)"><span>Y-signature in X</span><span style="font-variant-numeric:tabular-nums">{{ popupSigYinX }}</span></div>
+          <div style="position:relative;height:12px;margin-top:3px">
+            <div style="position:absolute;left:0;right:0;top:50%;height:1px;background:color-mix(in srgb, var(--color-text) 14%, transparent)"></div>
+            <div style="position:absolute;right:0;top:1px;bottom:1px;border-right:1px dashed color-mix(in srgb, var(--color-text) 30%, transparent)"></div>
+            <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:3px;width:{{ popupSigYinXPct }};background:var(--sim-green);opacity:{{ popupSigOpacity }};transition:width 220ms ease"></div>
+            <div style="position:absolute;left:{{ popupSigYinXPct }};top:50%;transform:translate(-100%,-50%);width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid var(--sim-green);opacity:{{ popupSigOpacity }};transition:left 220ms ease"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:0.02em;color:var(--sim-orange)"><span>X-signature in Y</span><span style="font-variant-numeric:tabular-nums">{{ popupSigXinY }}</span></div>
+          <div style="position:relative;height:12px;margin-top:3px">
+            <div style="position:absolute;left:0;right:0;top:50%;height:1px;background:color-mix(in srgb, var(--color-text) 14%, transparent)"></div>
+            <div style="position:absolute;right:0;top:1px;bottom:1px;border-right:1px dashed color-mix(in srgb, var(--color-text) 30%, transparent)"></div>
+            <div style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:3px;width:{{ popupSigXinYPct }};background:var(--sim-orange);opacity:{{ popupSigOpacity }};transition:width 220ms ease"></div>
+            <div style="position:absolute;left:{{ popupSigXinYPct }};top:50%;transform:translate(-100%,-50%);width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid var(--sim-orange);opacity:{{ popupSigOpacity }};transition:left 220ms ease"></div>
+          </div>
+        </div>
+        <div style="position:relative;height:20px">
+          <div style="position:absolute;left:{{ popupDeltaLeft }};width:{{ popupDeltaWidth }};top:0;height:7px;border-left:1px solid color-mix(in srgb, var(--color-text) 45%, transparent);border-right:1px solid color-mix(in srgb, var(--color-text) 45%, transparent);border-bottom:1px dashed color-mix(in srgb, var(--color-text) 45%, transparent);opacity:{{ popupDeltaOpacity }};transition:left 220ms ease, width 220ms ease"></div>
+          <span style="position:absolute;left:{{ popupDeltaMid }};top:8px;transform:translateX(-50%);white-space:nowrap;font-size:12px;font-variant-numeric:tabular-nums;color:color-mix(in srgb, var(--color-text) 70%, transparent);opacity:{{ popupDeltaOpacity }};transition:left 220ms ease">&Delta; {{ popupDeltaVal }}</span>
+          <span style="position:absolute;right:0;top:8px;transform:translateX(50%);font-size:11px;color:color-mix(in srgb, var(--color-text) 45%, transparent)">1.0</span>
+        </div>
+        <p style="margin:0;font-size:12.5px;line-height:1.5;color:color-mix(in srgb, var(--color-text) 68%, transparent)">{{ popupVerdict }} <strong style="color:{{ popupVerdictColor }};font-weight:600">{{ popupVerdictCall }}</strong></p>
       </div>
-    </figure>
+    </div>
 
-  </div>
+  </article>
 
-  <section style="padding:clamp(32px,4vw,48px) 0 0">
-    <span style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-bottom:var(--space-3)">Population state</span>
-    <h2 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:clamp(22px,2.6vw,30px);letter-spacing:-0.015em;margin:0 0 var(--space-5);max-width:34ch">Each vessel as one vector.</h2>
-    <canvas id="sim-plot" width="460" height="460" style="display:block;width:460px;height:460px;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
-  </section>
-
-  <footer style="padding:var(--space-8) 0 0;font-size:13px;color:color-mix(in srgb, var(--color-text) 65%, transparent)">Sandbox page — not linked from the site.</footer>
-</div>
+  <footer style="padding:var(--space-4) 0 var(--space-3);font-size:13px;color:color-mix(in srgb, var(--color-text) 60%, transparent)">
+    Standalone version of the simulator on the <a href="Education.dc.html" style="color:inherit">Education</a> page &mdash; <span style="white-space:nowrap">Yam Arieli</span>
+  </footer>
+</main>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;cellCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:5,&quot;max&quot;:60,&quot;section&quot;:&quot;Simulation&quot;},&quot;cytokineCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:40,&quot;section&quot;:&quot;Simulation&quot;},&quot;speedMult&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0.25,&quot;max&quot;:3,&quot;step&quot;:0.25,&quot;section&quot;:&quot;Simulation&quot;},&quot;spawnProb&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.3,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;section&quot;:&quot;Simulation&quot;},&quot;showTrails&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Plot&quot;}}">
+<script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { running: true, injected: false, tick: 0, a: { r: 0, s: 0, f: 0 }, b: { r: 0, s: 0, f: 0 } };
+  state = {};
 
   componentDidMount() {
     const cs = getComputedStyle(document.body);
     this.ink = cs.getPropertyValue('--color-text').trim() || '#201e1d';
     this.cyan = cs.getPropertyValue('--color-accent').trim() || '#0088b0';
     this.mag = cs.getPropertyValue('--color-accent-2').trim() || '#d6006c';
-    this.build();
-    this.frame = 0;
-    this.raf = requestAnimationFrame(this.loop);
-  }
-  componentWillUnmount() { cancelAnimationFrame(this.raf); }
-
-  cfg() {
-    return {
-      cells: this.props.cellCount ?? 20,
-      cyto: this.props.cytokineCount ?? 10,
-      speed: this.props.speedMult ?? 1,
-      p: this.props.spawnProb ?? 0.3,
-      trails: this.props.showTrails ?? true,
-    };
+    this.green = cs.getPropertyValue('--sim-green').trim() || '#1c7d55';
+    this.orange = cs.getPropertyValue('--sim-orange').trim() || '#c96a12';
+    this.startPopupSim();
   }
 
-  build() {
-    const c = this.cfg();
-    this.W = 380; this.R = 11;
-    this.v = { a: this.makeVessel(c), b: this.makeVessel(c) };
-    this.trail = { a: [], b: [] };
-    this.setState({ injected: false, tick: 0, a: { r: 0, s: 0, f: 0 }, b: { r: 0, s: 0, f: 0 } });
-  }
-
-  makeVessel(c) {
-    const cells = [];
-    for (let i = 0; i < c.cells; i++) {
-      const ang = Math.random() * Math.PI * 2, sp = (0.18 + Math.random() * 0.14) * c.speed;
-      cells.push({
-        x: this.R + Math.random() * (this.W - 2 * this.R),
-        y: this.R + Math.random() * (this.W - 2 * this.R),
-        vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp,
-        red: 0, sq: 0, flash: 0,
-      });
-    }
-    return { cells, cyt: [] };
-  }
-
-  addCytokines(vessel, type, n) {
-    const c = this.cfg();
-    for (let i = 0; i < n; i++) {
-      const ang = Math.random() * Math.PI * 2, sp = (0.45 + Math.random() * 0.25) * c.speed;
-      vessel.cyt.push({
-        x: 6 + Math.random() * (this.W - 12), y: 6 + Math.random() * (this.W - 12),
-        vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, type, ignore: -1, imm: 0,
-      });
-    }
-  }
-
-  inject = () => {
-    const c = this.cfg();
-    this.addCytokines(this.v.a, 'Y', c.cyto);
-    this.addCytokines(this.v.b, 'X', c.cyto);
-    this.setState({ injected: true, running: true });
-  };
-  toggleRun = () => this.setState(s => ({ running: !s.running }));
-  reset = () => this.build();
-
-  step(v) {
-    const c = this.cfg(), W = this.W, R = this.R;
-    for (const p of v.cells) {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < R) { p.x = R; p.vx *= -1; } else if (p.x > W - R) { p.x = W - R; p.vx *= -1; }
-      if (p.y < R) { p.y = R; p.vy *= -1; } else if (p.y > W - R) { p.y = W - R; p.vy *= -1; }
-      if (p.flash > 0) p.flash -= 1;
-    }
-    const born = [];
-    for (let i = v.cyt.length - 1; i >= 0; i--) {
-      const k = v.cyt[i];
-      k.x += k.vx; k.y += k.vy;
-      if (k.x < 3) { k.x = 3; k.vx *= -1; } else if (k.x > W - 3) { k.x = W - 3; k.vx *= -1; }
-      if (k.y < 3) { k.y = 3; k.vy *= -1; } else if (k.y > W - 3) { k.y = W - 3; k.vy *= -1; }
-      if (k.imm > 0) k.imm -= 1;
-      let hit = -1;
-      for (let j = 0; j < v.cells.length; j++) {
-        if (k.imm > 0 && j === k.ignore) continue;
-        const p = v.cells[j], dx = p.x - k.x, dy = p.y - k.y;
-        if (dx * dx + dy * dy < (R + 3.2) * (R + 3.2)) { hit = j; break; }
-      }
-      if (hit < 0) continue;
-      const p = v.cells[hit], amp = 0.5 + Math.random() * 0.4;
-      p.flash = 26;
-      if (k.type === 'Y') {
-        p.red = Math.min(1, p.red + amp * (1 - p.red));
-        const side = Math.random() * 0.1;
-        p.sq = Math.min(1, p.sq + side * (1 - p.sq));
-      } else {
-        p.sq = Math.min(1, p.sq + amp * (1 - p.sq));
-        if (Math.random() < c.p) {
-          const ang = Math.random() * Math.PI * 2, sp = (0.45 + Math.random() * 0.25) * c.speed;
-          born.push({
-            x: Math.max(4, Math.min(W - 4, p.x + Math.cos(ang) * (R + 7))),
-            y: Math.max(4, Math.min(W - 4, p.y + Math.sin(ang) * (R + 7))),
-            vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, type: 'Y', ignore: hit, imm: 260,
-          });
-        }
-      }
-      v.cyt.splice(i, 1);
-    }
-    for (const b of born) v.cyt.push(b);
-  }
+  componentWillUnmount() { this.stopPopupSim(); }
 
   mix(a, b, t) {
     const h = s => [parseInt(s.slice(1, 3), 16), parseInt(s.slice(3, 5), 16), parseInt(s.slice(5, 7), 16)];
@@ -195,13 +142,87 @@ class Component extends DCLogic {
     return 'rgb(' + A.map((x, i) => Math.round(x + (B[i] - x) * t)).join(',') + ')';
   }
 
-  drawVessel(id, v) {
+  genVessel(count, W) {
+    const R = Math.max(3, Math.round(W * 0.03));
+    const cells = [];
+    for (let i = 0; i < count; i++) {
+      const ang = Math.random() * Math.PI * 2, sp = 0.18 + Math.random() * 0.14;
+      cells.push({
+        x: R + Math.random() * (W - 2 * R), y: R + Math.random() * (W - 2 * R),
+        vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, red: 0, sq: 0, flash: 0,
+      });
+    }
+    return { cells, cyt: [] };
+  }
+
+  // potentCount: for type 'X', exactly this many of the n cytokines (picked off the
+  // front of the batch, which is already in random order) will trigger a cell they
+  // meet to secrete Y. Omit it for incidental single additions, where a 1/3 chance
+  // per cytokine keeps the same long-run cascade rate as a 7-of-21 injection.
+  addCyto(vessel, type, n, W, potentCount) {
+    for (let i = 0; i < n; i++) {
+      const ang = Math.random() * Math.PI * 2, sp = 0.45 + Math.random() * 0.25;
+      const cyt = {
+        x: 6 + Math.random() * (W - 12), y: 6 + Math.random() * (W - 12),
+        vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, type, ignore: -1, imm: 0,
+      };
+      if (type === 'X') cyt.spawnsY = potentCount != null ? i < potentCount : Math.random() < (1 / 3);
+      vessel.cyt.push(cyt);
+    }
+  }
+
+  stepVessel(vessel, W, R) {
+    for (const p of vessel.cells) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < R) { p.x = R; p.vx *= -1; } else if (p.x > W - R) { p.x = W - R; p.vx *= -1; }
+      if (p.y < R) { p.y = R; p.vy *= -1; } else if (p.y > W - R) { p.y = W - R; p.vy *= -1; }
+      if (p.flash > 0) p.flash -= 1;
+    }
+    const born = [];
+    for (let i = vessel.cyt.length - 1; i >= 0; i--) {
+      const k = vessel.cyt[i];
+      k.x += k.vx; k.y += k.vy;
+      if (k.x < 3) { k.x = 3; k.vx *= -1; } else if (k.x > W - 3) { k.x = W - 3; k.vx *= -1; }
+      if (k.y < 3) { k.y = 3; k.vy *= -1; } else if (k.y > W - 3) { k.y = W - 3; k.vy *= -1; }
+      if (k.imm > 0) k.imm -= 1;
+      let hit = -1;
+      for (let j = 0; j < vessel.cells.length; j++) {
+        if (k.imm > 0 && j === k.ignore) continue;
+        const p = vessel.cells[j], dx = p.x - k.x, dy = p.y - k.y;
+        if (dx * dx + dy * dy < (R + 3.2) * (R + 3.2)) { hit = j; break; }
+      }
+      if (hit < 0) continue;
+      const p = vessel.cells[hit], amp = 0.5 + Math.random() * 0.4;
+      p.flash = 26;
+      if (k.type === 'Y') {
+        p.red = Math.min(1, p.red + amp * (1 - p.red));
+        p.sq = Math.min(1, p.sq + Math.random() * 0.1 * (1 - p.sq));
+      } else {
+        p.sq = Math.min(1, p.sq + amp * (1 - p.sq));
+        if (k.spawnsY) {
+          const ang = Math.random() * Math.PI * 2, sp = 0.45 + Math.random() * 0.25;
+          born.push({
+            x: Math.max(4, Math.min(W - 4, p.x + Math.cos(ang) * (R + 7))),
+            y: Math.max(4, Math.min(W - 4, p.y + Math.sin(ang) * (R + 7))),
+            vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, type: 'Y', ignore: hit, imm: 260,
+          });
+        }
+      }
+      vessel.cyt.splice(i, 1);
+    }
+    for (const b of born) vessel.cyt.push(b);
+  }
+
+  // The canvas is backed at a multiple of the simulation world so it stays sharp
+  // when projected; everything below is drawn in world units.
+  drawVesselCanvas(id, vessel, W, R) {
     const cv = document.getElementById(id); if (!cv) return;
-    const g = cv.getContext('2d'), W = this.W, R = this.R;
+    const g = cv.getContext('2d'), z = cv.width / W;
+    g.setTransform(z, 0, 0, z, 0, 0);
     g.clearRect(0, 0, W, W);
     g.fillStyle = '#fff'; g.fillRect(0, 0, W, W);
     g.strokeStyle = this.ink; g.lineWidth = 1.5; g.strokeRect(0.75, 0.75, W - 1.5, W - 1.5);
-    for (const p of v.cells) {
+    for (const p of vessel.cells) {
       g.beginPath();
       const rad = R * (1 - 0.92 * p.sq);
       if (g.roundRect) g.roundRect(p.x - R, p.y - R, 2 * R, 2 * R, rad);
@@ -210,25 +231,36 @@ class Component extends DCLogic {
       g.globalAlpha = 0.9; g.fill(); g.globalAlpha = 1;
       if (p.flash > 0) { g.strokeStyle = this.ink; g.lineWidth = 1; g.globalAlpha = p.flash / 26; g.stroke(); g.globalAlpha = 1; }
     }
-    for (const k of v.cyt) {
+    for (const k of vessel.cyt) {
       g.fillStyle = k.type === 'Y' ? this.mag : this.ink;
-      if (k.type === 'Y') { g.beginPath(); g.arc(k.x, k.y, 3, 0, Math.PI * 2); g.fill(); }
-      else g.fillRect(k.x - 2.6, k.y - 2.6, 5.2, 5.2);
+      if (k.type === 'Y') { g.beginPath(); g.arc(k.x, k.y, Math.max(2, R * 0.27), 0, Math.PI * 2); g.fill(); }
+      else { const s = Math.max(4, R * 0.47); g.fillRect(k.x - s / 2, k.y - s / 2, s, s); }
     }
   }
 
-  means(v) {
+  meansOf(vessel) {
     let r = 0, s = 0;
-    for (const p of v.cells) { r += p.red; s += p.sq; }
-    return { r: r / v.cells.length, s: s / v.cells.length };
+    for (const p of vessel.cells) { r += p.red; s += p.sq; }
+    return { r: r / vessel.cells.length, s: s / vessel.cells.length };
   }
 
-  drawPlot(ma, mb) {
-    const cv = document.getElementById('sim-plot'); if (!cv) return;
-    const g = cv.getContext('2d'), S = 460, L = 56, B = 56, T = 24, Rt = 24;
+  // Drop each vessel's vector onto the other's signature axis. Raw values are what the
+  // plot draws; the normalized cosines are what the delta readout compares, so a vessel
+  // that simply responds harder cannot fake a directional asymmetry.
+  projections(ma, mb) {
+    const la = Math.hypot(ma.s, ma.r), lb = Math.hypot(mb.s, mb.r);
+    const ok = la > 0.02 && lb > 0.02;
+    const green = ok ? mb.r / lb : 0, orange = ok ? ma.s / la : 0;
+    return { ok, rawGreen: mb.r, rawOrange: ma.s, green, orange, delta: green - orange };
+  }
+
+  drawPlotCanvas(id, S, ma, mb, trail, proj) {
+    const cv = document.getElementById(id); if (!cv) return;
+    const k = S / 280;
+    const g = cv.getContext('2d'), L = 44 * k, B = 40 * k, T = 16 * k, Rt = 16 * k;
     const x = t => L + t * (S - L - Rt), y = t => (S - B) - t * (S - B - T);
     g.clearRect(0, 0, S, S); g.fillStyle = '#fff'; g.fillRect(0, 0, S, S);
-    g.font = '12px "Source Serif 4", serif'; g.fillStyle = this.ink;
+    g.font = (11 * k).toFixed(1) + 'px "Source Serif 4", serif'; g.fillStyle = this.ink;
     g.strokeStyle = 'rgba(32,30,29,0.14)'; g.lineWidth = 1;
     for (const t of [0.25, 0.5, 0.75, 1]) {
       g.beginPath(); g.moveTo(x(t), y(0)); g.lineTo(x(t), y(1)); g.stroke();
@@ -237,72 +269,139 @@ class Component extends DCLogic {
     g.strokeStyle = this.ink; g.lineWidth = 1.5;
     g.beginPath(); g.moveTo(x(0), y(0)); g.lineTo(x(1), y(0)); g.moveTo(x(0), y(0)); g.lineTo(x(0), y(1)); g.stroke();
     g.textAlign = 'center';
-    for (const t of [0, 0.5, 1]) g.fillText(t.toFixed(1), x(t), y(0) + 18);
+    for (const t of [0, 0.5, 1]) g.fillText(t.toFixed(1), x(t), y(0) + 15 * k);
     g.textAlign = 'right';
-    for (const t of [0.5, 1]) g.fillText(t.toFixed(1), x(0) - 8, y(t) + 4);
-    g.fillText('0.0', x(0) - 8, y(0) + 4);
+    for (const t of [0.5, 1]) g.fillText(t.toFixed(1), x(0) - 6 * k, y(t) + 4 * k);
+    g.fillText('0.0', x(0) - 6 * k, y(0) + 4 * k);
     g.textAlign = 'center';
-    g.fillText('squareness →', (x(0) + x(1)) / 2, S - 12);
-    g.save(); g.translate(16, (y(0) + y(1)) / 2); g.rotate(-Math.PI / 2); g.fillText('redness →', 0, 0); g.restore();
-
-    if (this.cfg().trails) {
-      for (const key of ['a', 'b']) {
-        g.fillStyle = key === 'a' ? this.mag : this.cyan; g.globalAlpha = 0.18;
-        for (const pt of this.trail[key]) { g.beginPath(); g.arc(x(pt[0]), y(pt[1]), 2, 0, Math.PI * 2); g.fill(); }
-        g.globalAlpha = 1;
-      }
+    g.fillText('X signature direction - squareness →', (x(0) + x(1)) / 2, S - 8 * k);
+    g.save(); g.translate(13 * k, (y(0) + y(1)) / 2); g.rotate(-Math.PI / 2); g.fillText('Y signature direction - redness →', 0, 0); g.restore();
+    for (const key of ['a', 'b']) {
+      g.fillStyle = key === 'a' ? this.mag : this.cyan; g.globalAlpha = 0.18;
+      for (const pt of trail[key]) { g.beginPath(); g.arc(x(pt[0]), y(pt[1]), 2 * k, 0, Math.PI * 2); g.fill(); }
+      g.globalAlpha = 1;
     }
-    this.arrow(g, x(0), y(0), x(ma.s), y(ma.r), this.mag, 'A');
-    this.arrow(g, x(0), y(0), x(mb.s), y(mb.r), this.cyan, 'B');
+    if (proj && proj.ok) {
+      // orthogonal projection guides: each vector's tip dropped onto the other's axis
+      g.strokeStyle = 'rgba(32,30,29,0.38)'; g.lineWidth = 1; g.setLineDash([4 * k, 4 * k]);
+      g.beginPath(); g.moveTo(x(mb.s), y(mb.r)); g.lineTo(x(0), y(mb.r)); g.stroke();
+      g.beginPath(); g.moveTo(x(ma.s), y(ma.r)); g.lineTo(x(ma.s), y(0)); g.stroke();
+      g.setLineDash([]);
+      // the two projections themselves: the quantities the delta compares
+      this.arrow(g, x(0) + 4 * k, y(0), x(0) + 4 * k, y(proj.rawGreen), this.green, '', k);
+      this.arrow(g, x(0), y(0) - 4 * k, x(proj.rawOrange), y(0) - 4 * k, this.orange, '', k);
+    }
+    this.arrow(g, x(0), y(0), x(ma.s), y(ma.r), this.mag, 'A', k);
+    this.arrow(g, x(0), y(0), x(mb.s), y(mb.r), this.cyan, 'B', k);
+    // the unstimulated reference: the control condition both vectors start from
+    g.strokeStyle = this.ink; g.fillStyle = this.ink; g.lineWidth = 1.2;
+    g.beginPath(); g.arc(x(0), y(0), 5 * k, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.arc(x(0), y(0), 2 * k, 0, Math.PI * 2); g.fill();
   }
 
-  arrow(g, x0, y0, x1, y1, col, label) {
+  arrow(g, x0, y0, x1, y1, col, label, k) {
+    k = k || 1;
     const dx = x1 - x0, dy = y1 - y0, len = Math.hypot(dx, dy);
-    g.strokeStyle = col; g.fillStyle = col; g.lineWidth = 2;
-    if (len > 6) {
+    g.strokeStyle = col; g.fillStyle = col; g.lineWidth = 2 * k;
+    if (len > 6 * k) {
       const ux = dx / len, uy = dy / len, tipX = x1, tipY = y1;
-      g.beginPath(); g.moveTo(x0, y0); g.lineTo(tipX - ux * 8, tipY - uy * 8); g.stroke();
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(tipX - ux * 8 * k, tipY - uy * 8 * k); g.stroke();
       g.beginPath();
       g.moveTo(tipX, tipY);
-      g.lineTo(tipX - ux * 11 - uy * 5.5, tipY - uy * 11 + ux * 5.5);
-      g.lineTo(tipX - ux * 11 + uy * 5.5, tipY - uy * 11 - ux * 5.5);
+      g.lineTo(tipX - (ux * 11 + uy * 5.5) * k, tipY - (uy * 11 - ux * 5.5) * k);
+      g.lineTo(tipX - (ux * 11 - uy * 5.5) * k, tipY - (uy * 11 + ux * 5.5) * k);
       g.closePath(); g.fill();
-    } else { g.beginPath(); g.arc(x0, y0, 3.5, 0, Math.PI * 2); g.fill(); }
-    g.font = 'italic 16px "Source Serif 4", serif'; g.textAlign = 'left';
-    g.fillText(label, x1 + 9, y1 - 7);
+    } else if (label) { g.beginPath(); g.arc(x0, y0, 3.5 * k, 0, Math.PI * 2); g.fill(); }
+    if (!label) return;
+    g.font = 'italic ' + (14 * k).toFixed(1) + 'px "Source Serif 4", serif'; g.textAlign = 'left';
+    g.fillText(label, x1 + 8 * k, y1 - 6 * k);
   }
 
-  loop = () => {
-    this.raf = requestAnimationFrame(this.loop);
-    if (!this.v) return;
-    if (this.state.running) { this.step(this.v.a); this.step(this.v.b); this.frame++; }
-    const ma = this.means(this.v.a), mb = this.means(this.v.b);
-    this.drawVessel('sim-a', this.v.a);
-    this.drawVessel('sim-b', this.v.b);
-    if (this.state.running && this.frame % 20 === 0) {
-      this.trail.a.push([ma.s, ma.r]); this.trail.b.push([mb.s, mb.r]);
-      if (this.trail.a.length > 220) { this.trail.a.shift(); this.trail.b.shift(); }
+  buildPopup() {
+    this.popup = { a: this.genVessel(16, 280), b: this.genVessel(16, 280), trail: { a: [], b: [] }, frame: 0 };
+    this.setState({ popupA: { r: 0, s: 0 }, popupB: { r: 0, s: 0 }, popupProj: null, popupRunning: true, popupInjected: false, popupTick: 0 });
+  }
+
+  startPopupSim() {
+    this.stopPopupSim();
+    this.buildPopup();
+    this.popupRaf = requestAnimationFrame(this.popupLoop);
+  }
+
+  stopPopupSim() {
+    if (this.popupRaf) cancelAnimationFrame(this.popupRaf);
+  }
+
+  popupInject = () => {
+    if (!this.popup) return;
+    this.addCyto(this.popup.a, 'Y', 21, 280);
+    this.addCyto(this.popup.b, 'X', 21, 280, 7);
+    this.setState({ popupInjected: true, popupRunning: true });
+  };
+  popupToggleRun = () => this.setState(s => ({ popupRunning: !s.popupRunning }));
+  popupReset = () => this.buildPopup();
+
+  popupLoop = () => {
+    this.popupRaf = requestAnimationFrame(this.popupLoop);
+    if (!this.popup) return;
+    if (this.state.popupRunning) { this.stepVessel(this.popup.a, 280, 8); this.stepVessel(this.popup.b, 280, 8); this.popup.frame++; }
+    const ma = this.meansOf(this.popup.a), mb = this.meansOf(this.popup.b);
+    this.drawVesselCanvas('popup-vessel-a', this.popup.a, 280, 8);
+    this.drawVesselCanvas('popup-vessel-b', this.popup.b, 280, 8);
+    if (this.state.popupRunning && this.popup.frame % 20 === 0) {
+      this.popup.trail.a.push([ma.s, ma.r]); this.popup.trail.b.push([mb.s, mb.r]);
+      if (this.popup.trail.a.length > 150) { this.popup.trail.a.shift(); this.popup.trail.b.shift(); }
     }
-    this.drawPlot(ma, mb);
-    if (this.frame % 12 === 0) {
-      this.setState({
-        tick: this.frame,
-        a: { r: ma.r, s: ma.s, f: this.v.a.cyt.length },
-        b: { r: mb.r, s: mb.s, f: this.v.b.cyt.length },
-      });
+    const proj = this.projections(ma, mb);
+    this.drawPlotCanvas('popup-plot', 840, ma, mb, this.popup.trail, proj);
+    if (this.popup.frame % 12 === 0) {
+      this.setState({ popupTick: this.popup.frame, popupA: { r: ma.r, s: ma.s }, popupB: { r: mb.r, s: mb.s }, popupProj: proj });
     }
   };
 
+  simEps = 0.1;
+
   renderVals() {
-    const f = n => n.toFixed(2);
+    const proj = this.state.popupProj || { ok: false, green: 0, orange: 0, delta: 0 };
+    const pct = v => (Math.max(0, Math.min(1, v)) * 100).toFixed(1) + '%';
+    const lo = Math.min(proj.green, proj.orange), hi = Math.max(proj.green, proj.orange);
+    const d = proj.delta, eps = this.simEps;
+    let verdict, call = '', callColor = 'var(--color-text)';
+    if (!proj.ok) {
+      verdict = 'Inject cytokines to compare the two responses.';
+    } else if (Math.abs(d) < eps) {
+      verdict = 'Δ = ' + d.toFixed(2) + ', below ε = ' + eps.toFixed(2) + ', no directional evidence yet.';
+    } else if (d > 0) {
+      verdict = 'Δ = ' + d.toFixed(2) + ' ≫ ε: Y’s signature is present in X’s response, while X’s is absent from Y’s:';
+      call = 'X → Y'; callColor = 'var(--sim-green)';
+    } else {
+      verdict = 'Δ = ' + d.toFixed(2) + ' ≪ −ε: X’s signature is present in Y’s response, while Y’s is absent from X’s:';
+      call = 'Y → X'; callColor = 'var(--sim-orange)';
+    }
     return {
-      inject: this.inject, toggleRun: this.toggleRun, reset: this.reset,
-      injectLabel: this.state.injected ? 'Inject more cytokines' : 'Inject cytokines',
-      runLabel: this.state.running ? 'Pause' : 'Play',
-      tick: this.state.tick,
-      aRed: f(this.state.a.r), aSq: f(this.state.a.s), aFree: this.state.a.f,
-      bRed: f(this.state.b.r), bSq: f(this.state.b.s), bFree: this.state.b.f,
-      spawnProbLabel: f(this.cfg().p),
+      popupARed: (this.state.popupA ? this.state.popupA.r : 0).toFixed(2),
+      popupASq: (this.state.popupA ? this.state.popupA.s : 0).toFixed(2),
+      popupBRed: (this.state.popupB ? this.state.popupB.r : 0).toFixed(2),
+      popupBSq: (this.state.popupB ? this.state.popupB.s : 0).toFixed(2),
+      popupInject: this.popupInject,
+      popupToggleRun: this.popupToggleRun,
+      popupReset: this.popupReset,
+      popupInjectLabel: this.state.popupInjected ? 'Inject more cytokines' : 'Inject cytokines',
+      popupRunLabel: this.state.popupRunning ? 'Pause' : 'Play',
+      popupTick: this.state.popupTick || 0,
+      popupSigYinX: proj.ok ? proj.green.toFixed(2) : '-',
+      popupSigXinY: proj.ok ? proj.orange.toFixed(2) : '-',
+      popupSigYinXPct: pct(proj.green),
+      popupSigXinYPct: pct(proj.orange),
+      popupDeltaLeft: pct(lo),
+      popupDeltaWidth: pct(hi - lo),
+      popupDeltaMid: pct((lo + hi) / 2),
+      popupDeltaVal: (d >= 0 ? '+' : '−') + Math.abs(d).toFixed(2),
+      popupSigOpacity: proj.ok ? 1 : 0,
+      popupDeltaOpacity: proj.ok && Math.abs(d) > 0.01 ? 1 : 0,
+      popupVerdict: verdict,
+      popupVerdictCall: call,
+      popupVerdictColor: callColor,
     };
   }
 }
