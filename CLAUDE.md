@@ -34,17 +34,33 @@ not built.
 
 ### The standalone simulator page
 
-`Simulator.dc.html` → **https://yam-arieli.github.io/Simulator.html**. It exists for talks:
-a link you can open full-screen, screen-record, or embed in a slide, without navigating the
-Education page and clicking the simulator card open. It is not linked from the nav; only the
-Education page is (and this page links back).
+`Simulator.dc.html` → **https://yam-arieli.github.io/Simulator.html**. It is the version
+built to be *presented* — thesis defence, talks: open it full-screen, screen-record it, or
+link it from a slide, with no nav to navigate and no card to click open. It is not linked
+from the nav; only the Education page is (and this page links back).
 
-It hosts the **same** simulator as the `data-detail="simulator"` panel in
-`Education.dc.html` — same physics, same `popup*` method and binding names, deliberately
-copied rather than rewritten. Two differences, both for projection: a three-up layout
-(vessels | plot | readout) that fits one screen, and canvases backed at 2× the simulation
-world (vessels 560 for a 280 world, plot 840), which `drawVesselCanvas` handles by scaling
-the context. **When you change the simulator in one file, change it in the other.**
+It is **built up one layer at a time**, because a panel that explains itself has to be shown
+on its own first. It opens on the two vessels and their drifting cells and nothing else;
+four toggles — buttons, or keys `1`–`4` — reveal the cytokine particles, the
+squareness–redness plot, the projection arrows with their dashed guides, and the Δ verdict
+panel, in that order (`space` = pause/play, `i` = inject, `r` = reset). Reveal `3` pulls `2`
+in with it and hiding `2` hides `3`, so a projection is never switched on behind a hidden
+plot. `renderVals` recomputes the grid from those flags, so a hidden panel gives its column
+back instead of leaving a hole. Hiding the cytokines is **drawing only** — `stepVessel` is
+untouched, so they still move, bind and cascade while invisible, which is the whole point of
+that reveal.
+
+Its relationship to the `data-detail="simulator"` panel in `Education.dc.html`:
+
+- The **physics is shared and must stay in sync** — `genVessel`, `addCyto`, `stepVessel`,
+  `meansOf` and `projections` are character-identical in both files, as are the `popup*`
+  method and binding names. Change one, change the other.
+- The **presentation deliberately differs** and should not be copied back: the staged
+  reveal and its control bar, the vessel colours (`--sim-vessel-a` / `--sim-vessel-b` — the
+  dark parent of each vessel's own projection ink, replacing the cyan/magenta arrows, which
+  collided with the cell colours), projections drawn last and at half thickness so they sit
+  in front, canvases backed at 2× the simulation world (vessels 560 for a 280 world, plot
+  840), and panels capped in `vh` so each reveal state fits one projected screen.
 
 ## Edit loop
 

@@ -21,6 +21,11 @@
 :root {
   --sim-green: #1c7d55;   /* Y-signature found in X's response */
   --sim-orange: #c96a12;  /* X-signature found in Y's response */
+  /* Each vessel takes the darker parent of the projection its own vector produces:
+     A's squareness is the orange projection, B's redness is the green one. The cells
+     keep the cyan-to-magenta ramp, which is now the only blue and red on the page. */
+  --sim-vessel-a: #8a4708;
+  --sim-vessel-b: #0f5137;
 }
 a:hover { color: var(--color-accent-700); }
 #dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; }
@@ -29,10 +34,9 @@ a:hover { color: var(--color-accent-700); }
    grid falls back to the stacked arrangement the detail sheet uses on the site. */
 @media (max-width: 1180px) {
   [data-sim-page] { grid-template-columns: 1fr 1fr !important; }
-  /* Paired on one row so they stay comparable, but capped: stretched to half the
-     page the vessels dwarf the plot that reads them. */
+  /* Paired on one row so they stay comparable — their size is capped inline, from
+     the reveal state, so that a lone pair can still fill the screen. */
   [data-sim="vessels"] { grid-column: 1 / -1 !important; flex-direction: row !important; }
-  [data-sim="vessels"] figure { max-width: 320px; }
   [data-sim="head"] { grid-template-columns: 1fr !important; align-items: start !important; }
 }
 @media (max-width: 720px) {
@@ -43,7 +47,7 @@ a:hover { color: var(--color-accent-700); }
 </helmet>
 
 <main style="max-width:1400px;margin:0 auto;padding:clamp(16px,2vw,28px) clamp(20px,4vw,56px)">
-  <article data-sim-page style="display:grid;grid-template-columns:minmax(0,0.62fr) minmax(0,1.27fr) minmax(0,1fr);gap:clamp(16px,2vw,32px);align-items:start;width:100%">
+  <article data-sim-page style="display:grid;grid-template-columns:{{ gridCols }};gap:clamp(16px,2vw,32px);align-items:start;width:100%">
 
     <div data-sim="head" style="grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,0.62fr) minmax(0,2.35fr);gap:clamp(16px,2vw,32px);align-items:end;min-width:0">
       <div style="display:flex;flex-direction:column;gap:var(--space-2);min-width:0">
@@ -52,30 +56,13 @@ a:hover { color: var(--color-accent-700); }
       </div>
       <div data-sim="prose" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);font-size:14.5px;line-height:1.6;color:color-mix(in srgb, var(--color-text) 82%, transparent)">
         <p style="margin:0">Redness and squareness are two pseudo-effects a cytokine can leave on a cell. Redness stands for an immune response; squareness for a <em>controlled release</em> of one &mdash; a squared cell goes on to secrete cytokine Y itself. So X, which squares cells, drives Y downstream. Y reddens cells and squares them slightly too, but that slight squaring is incidental noise from a messy perturbation, not a signal being passed on. The cascade X &rarr; Y is real; Y &rarr; X is not.</p>
-        <p style="margin:0">All we get to observe is the cells &mdash; their redness and squareness, standing in for a gene-expression profile &mdash; and which cytokine we chose to inject into each vessel. The cytokines themselves are invisible: we never watch one bind, and we never see the Y a cell secretes. That hidden Y is precisely what we are trying to prove exists. So the plot reduces each vessel to one (squareness, redness) vector and drops each onto the other&rsquo;s axis; the gap between those two projections is the cascade, recovered from the cells alone.</p>
+        <p style="margin:0;display:{{ proseTwoDisplay }}">All we get to observe is the cells &mdash; their redness and squareness, standing in for a gene-expression profile &mdash; and which cytokine we chose to inject into each vessel. The cytokines themselves are invisible: we never watch one bind, and we never see the Y a cell secretes. That hidden Y is precisely what we are trying to prove exists. So the plot reduces each vessel to one (squareness, redness) vector and drops each onto the other&rsquo;s axis; the gap between those two projections is the cascade, recovered from the cells alone.</p>
       </div>
     </div>
 
-    <div data-sim="vessels" style="min-width:0;display:flex;flex-direction:column;gap:var(--space-3)">
-      <figure style="margin:0;min-width:0;flex:1;display:flex;flex-direction:column;gap:var(--space-2)">
-        <canvas id="popup-vessel-a" width="560" height="560" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
-        <figcaption style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 65%, transparent)">
-          <span>Vessel A · cytokine Y only</span><span>r {{ popupARed }} · s {{ popupASq }}</span>
-        </figcaption>
-      </figure>
-      <figure style="margin:0;min-width:0;flex:1;display:flex;flex-direction:column;gap:var(--space-2)">
-        <canvas id="popup-vessel-b" width="560" height="560" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
-        <figcaption style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 65%, transparent)">
-          <span>Vessel B · cytokine X → Y</span><span>r {{ popupBRed }} · s {{ popupBSq }}</span>
-        </figcaption>
-      </figure>
-    </div>
-
-    <div data-sim="plot" style="min-width:0">
-      <canvas id="popup-plot" width="840" height="840" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
-    </div>
-
-    <div data-sim="panel" style="min-width:0;display:flex;flex-direction:column;gap:var(--space-3)">
+    <!-- Full width, and above the panels it reveals: the reveal toggles have to stay
+         reachable when every panel they control is hidden. -->
+    <div data-sim="controls" style="grid-column:1 / -1;display:flex;gap:var(--space-3) var(--space-4);flex-wrap:wrap;align-items:center;padding:var(--space-3) 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)">
       <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
         <button class="btn btn-primary" type="button" onClick="{{ popupInject }}" style="font-size:13px;padding:7px 12px">{{ popupInjectLabel }}</button>
         <button class="btn btn-secondary" type="button" onClick="{{ popupToggleRun }}" style="font-size:13px;padding:7px 12px">{{ popupRunLabel }}</button>
@@ -83,6 +70,37 @@ a:hover { color: var(--color-accent-700); }
         <span style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 60%, transparent)">t = {{ popupTick }}</span>
       </div>
 
+      <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center">
+        <span style="font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 52%, transparent)">Reveal</span>
+        <button class="btn {{ cytoBtnClass }}" type="button" aria-pressed="{{ cytoPressed }}" onClick="{{ toggleCyto }}" style="font-size:13px;padding:7px 12px"><span style="opacity:0.55;font-variant-numeric:tabular-nums;margin-right:6px">1</span>Cytokines</button>
+        <button class="btn {{ plotBtnClass }}" type="button" aria-pressed="{{ plotPressed }}" onClick="{{ togglePlot }}" style="font-size:13px;padding:7px 12px"><span style="opacity:0.55;font-variant-numeric:tabular-nums;margin-right:6px">2</span>2D plot</button>
+        <button class="btn {{ projBtnClass }}" type="button" aria-pressed="{{ projPressed }}" onClick="{{ toggleProj }}" style="font-size:13px;padding:7px 12px"><span style="opacity:0.55;font-variant-numeric:tabular-nums;margin-right:6px">3</span>Projections</button>
+        <button class="btn {{ deltaBtnClass }}" type="button" aria-pressed="{{ deltaPressed }}" onClick="{{ toggleDelta }}" style="font-size:13px;padding:7px 12px"><span style="opacity:0.55;font-variant-numeric:tabular-nums;margin-right:6px">4</span>&Delta; verdict</button>
+      </div>
+    </div>
+
+    <div data-sim="vessels" style="min-width:0;display:flex;flex-direction:{{ vesselFlow }};gap:var(--space-3);width:100%">
+      <figure style="margin:0;min-width:0;flex:1;max-width:{{ vesselMax }};display:flex;flex-direction:column;gap:var(--space-2)">
+        <canvas id="popup-vessel-a" width="560" height="560" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+        <figcaption style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px var(--space-3);font-size:12.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 65%, transparent)">
+          <span style="color:var(--sim-vessel-a);font-weight:600;white-space:nowrap">Vessel A · cytokine Y only</span><span style="white-space:nowrap">r {{ popupARed }} · s {{ popupASq }}</span>
+        </figcaption>
+      </figure>
+      <figure style="margin:0;min-width:0;flex:1;max-width:{{ vesselMax }};display:flex;flex-direction:column;gap:var(--space-2)">
+        <canvas id="popup-vessel-b" width="560" height="560" style="display:block;width:100%;height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+        <figcaption style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px var(--space-3);font-size:12.5px;letter-spacing:0.02em;color:color-mix(in srgb, var(--color-text) 65%, transparent)">
+          <span style="color:var(--sim-vessel-b);font-weight:600;white-space:nowrap">Vessel B · cytokine X → Y</span><span style="white-space:nowrap">r {{ popupBRed }} · s {{ popupBSq }}</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- Centred and height-capped: with the verdict panel still hidden this column is
+         wide, and an unbounded square plot would push the page off the screen. -->
+    <div data-sim="plot" style="min-width:0;display:{{ plotDisplay }};justify-content:center">
+      <canvas id="popup-plot" width="840" height="840" style="display:block;width:100%;max-width:min(100%,62vh);height:auto;background:#fff;box-shadow:var(--shadow-sm)"></canvas>
+    </div>
+
+    <div data-sim="panel" style="min-width:0;display:{{ deltaDisplay }};flex-direction:column;gap:var(--space-3)">
       <div style="display:flex;flex-direction:column;justify-content:center;gap:var(--space-2);padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-neutral-200)">
         <p style="margin:0;font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 52%, transparent)">Each projection normalized to its own vessel&rsquo;s response, 0 &rarr; 1</p>
         <div>
@@ -122,7 +140,9 @@ a:hover { color: var(--color-accent-700); }
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = {};
+  // The page opens on the raw observation — two vessels of drifting cells — and is
+  // built up one layer at a time from there. Nothing else is on screen until asked for.
+  state = { showCyto: false, showPlot: false, showProj: false, showDelta: false };
 
   componentDidMount() {
     const cs = getComputedStyle(document.body);
@@ -131,10 +151,40 @@ class Component extends DCLogic {
     this.mag = cs.getPropertyValue('--color-accent-2').trim() || '#d6006c';
     this.green = cs.getPropertyValue('--sim-green').trim() || '#1c7d55';
     this.orange = cs.getPropertyValue('--sim-orange').trim() || '#c96a12';
+    this.inkA = cs.getPropertyValue('--sim-vessel-a').trim() || '#8a4708';
+    this.inkB = cs.getPropertyValue('--sim-vessel-b').trim() || '#0f5137';
+    document.addEventListener('keydown', this.onKey);
     this.startPopupSim();
   }
 
-  componentWillUnmount() { this.stopPopupSim(); }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKey);
+    this.stopPopupSim();
+  }
+
+  // Reveal 3 needs the plot it draws into, and a projection left switched on behind a
+  // hidden plot would be state you cannot see — so the two move together downwards.
+  toggleCyto = () => this.setState(s => ({ showCyto: !s.showCyto }));
+  togglePlot = () => this.setState(s => (s.showPlot ? { showPlot: false, showProj: false } : { showPlot: true }));
+  toggleProj = () => this.setState(s => (s.showProj ? { showProj: false } : { showProj: true, showPlot: true }));
+  toggleDelta = () => this.setState(s => ({ showDelta: !s.showDelta }));
+
+  // Presenting from the keyboard: the reveals are 1-4, in the order the argument is
+  // built. Keys are ignored while a control has focus, so Space does not both toggle
+  // the run and re-fire the button the presenter last clicked.
+  onKey = (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const t = e.target;
+    if (t && t.closest && t.closest('button, input, textarea, select, a, [contenteditable]')) return;
+    const hit = {
+      '1': this.toggleCyto, '2': this.togglePlot, '3': this.toggleProj, '4': this.toggleDelta,
+      ' ': this.popupToggleRun, 'i': this.popupInject, 'I': this.popupInject,
+      'r': this.popupReset, 'R': this.popupReset,
+    }[e.key];
+    if (!hit) return;
+    e.preventDefault();
+    hit();
+  };
 
   mix(a, b, t) {
     const h = s => [parseInt(s.slice(1, 3), 16), parseInt(s.slice(3, 5), 16), parseInt(s.slice(5, 7), 16)];
@@ -214,14 +264,17 @@ class Component extends DCLogic {
   }
 
   // The canvas is backed at a multiple of the simulation world so it stays sharp
-  // when projected; everything below is drawn in world units.
-  drawVesselCanvas(id, vessel, W, R) {
+  // when projected; everything below is drawn in world units. `edge` is the vessel's
+  // own ink, so a vessel is tied to its arrow before the plot is ever shown, and
+  // `showCyto` only gates the drawing — the cytokines move and bind either way.
+  drawVesselCanvas(id, vessel, W, R, edge, showCyto) {
     const cv = document.getElementById(id); if (!cv) return;
     const g = cv.getContext('2d'), z = cv.width / W;
     g.setTransform(z, 0, 0, z, 0, 0);
     g.clearRect(0, 0, W, W);
     g.fillStyle = '#fff'; g.fillRect(0, 0, W, W);
-    g.strokeStyle = this.ink; g.lineWidth = 1.5; g.strokeRect(0.75, 0.75, W - 1.5, W - 1.5);
+    const lw = edge ? 3.5 : 1.5;
+    g.strokeStyle = edge || this.ink; g.lineWidth = lw; g.strokeRect(lw / 2, lw / 2, W - lw, W - lw);
     for (const p of vessel.cells) {
       g.beginPath();
       const rad = R * (1 - 0.92 * p.sq);
@@ -231,6 +284,7 @@ class Component extends DCLogic {
       g.globalAlpha = 0.9; g.fill(); g.globalAlpha = 1;
       if (p.flash > 0) { g.strokeStyle = this.ink; g.lineWidth = 1; g.globalAlpha = p.flash / 26; g.stroke(); g.globalAlpha = 1; }
     }
+    if (!showCyto) return;
     for (const k of vessel.cyt) {
       g.fillStyle = k.type === 'Y' ? this.mag : this.ink;
       if (k.type === 'Y') { g.beginPath(); g.arc(k.x, k.y, Math.max(2, R * 0.27), 0, Math.PI * 2); g.fill(); }
@@ -254,7 +308,7 @@ class Component extends DCLogic {
     return { ok, rawGreen: mb.r, rawOrange: ma.s, green, orange, delta: green - orange };
   }
 
-  drawPlotCanvas(id, S, ma, mb, trail, proj) {
+  drawPlotCanvas(id, S, ma, mb, trail, proj, showProj) {
     const cv = document.getElementById(id); if (!cv) return;
     const k = S / 280;
     const g = cv.getContext('2d'), L = 44 * k, B = 40 * k, T = 16 * k, Rt = 16 * k;
@@ -277,39 +331,44 @@ class Component extends DCLogic {
     g.fillText('X signature direction - squareness →', (x(0) + x(1)) / 2, S - 8 * k);
     g.save(); g.translate(13 * k, (y(0) + y(1)) / 2); g.rotate(-Math.PI / 2); g.fillText('Y signature direction - redness →', 0, 0); g.restore();
     for (const key of ['a', 'b']) {
-      g.fillStyle = key === 'a' ? this.mag : this.cyan; g.globalAlpha = 0.18;
+      g.fillStyle = key === 'a' ? this.inkA : this.inkB; g.globalAlpha = 0.18;
       for (const pt of trail[key]) { g.beginPath(); g.arc(x(pt[0]), y(pt[1]), 2 * k, 0, Math.PI * 2); g.fill(); }
       g.globalAlpha = 1;
     }
-    if (proj && proj.ok) {
+    this.arrow(g, x(0), y(0), x(ma.s), y(ma.r), this.inkA, 'A', k);
+    this.arrow(g, x(0), y(0), x(mb.s), y(mb.r), this.inkB, 'B', k);
+    // Drawn last, and thin: the projections are the conclusion read off the two vessel
+    // vectors, so they sit in front of them rather than disappearing underneath.
+    if (showProj && proj && proj.ok) {
       // orthogonal projection guides: each vector's tip dropped onto the other's axis
-      g.strokeStyle = 'rgba(32,30,29,0.38)'; g.lineWidth = 1; g.setLineDash([4 * k, 4 * k]);
+      g.strokeStyle = 'rgba(32,30,29,0.38)'; g.lineWidth = 1 * k; g.setLineDash([4 * k, 4 * k]);
       g.beginPath(); g.moveTo(x(mb.s), y(mb.r)); g.lineTo(x(0), y(mb.r)); g.stroke();
       g.beginPath(); g.moveTo(x(ma.s), y(ma.r)); g.lineTo(x(ma.s), y(0)); g.stroke();
       g.setLineDash([]);
       // the two projections themselves: the quantities the delta compares
-      this.arrow(g, x(0) + 4 * k, y(0), x(0) + 4 * k, y(proj.rawGreen), this.green, '', k);
-      this.arrow(g, x(0), y(0) - 4 * k, x(proj.rawOrange), y(0) - 4 * k, this.orange, '', k);
+      this.arrow(g, x(0) + 4 * k, y(0), x(0) + 4 * k, y(proj.rawGreen), this.green, '', k, 0.5);
+      this.arrow(g, x(0), y(0) - 4 * k, x(proj.rawOrange), y(0) - 4 * k, this.orange, '', k, 0.5);
     }
-    this.arrow(g, x(0), y(0), x(ma.s), y(ma.r), this.mag, 'A', k);
-    this.arrow(g, x(0), y(0), x(mb.s), y(mb.r), this.cyan, 'B', k);
     // the unstimulated reference: the control condition both vectors start from
-    g.strokeStyle = this.ink; g.fillStyle = this.ink; g.lineWidth = 1.2;
+    g.strokeStyle = this.ink; g.fillStyle = this.ink; g.lineWidth = 1.2 * k;
     g.beginPath(); g.arc(x(0), y(0), 5 * k, 0, Math.PI * 2); g.stroke();
     g.beginPath(); g.arc(x(0), y(0), 2 * k, 0, Math.PI * 2); g.fill();
   }
 
-  arrow(g, x0, y0, x1, y1, col, label, k) {
-    k = k || 1;
+  // `w` scales the shaft (1 = a vessel vector, 0.5 = a projection); the head follows it
+  // part of the way so a thin arrow still reads as an arrow.
+  arrow(g, x0, y0, x1, y1, col, label, k, w) {
+    k = k || 1; w = w == null ? 1 : w;
+    const hs = 0.55 + 0.45 * w;
     const dx = x1 - x0, dy = y1 - y0, len = Math.hypot(dx, dy);
-    g.strokeStyle = col; g.fillStyle = col; g.lineWidth = 2 * k;
+    g.strokeStyle = col; g.fillStyle = col; g.lineWidth = 2 * k * w;
     if (len > 6 * k) {
       const ux = dx / len, uy = dy / len, tipX = x1, tipY = y1;
-      g.beginPath(); g.moveTo(x0, y0); g.lineTo(tipX - ux * 8 * k, tipY - uy * 8 * k); g.stroke();
+      g.beginPath(); g.moveTo(x0, y0); g.lineTo(tipX - ux * 8 * k * hs, tipY - uy * 8 * k * hs); g.stroke();
       g.beginPath();
       g.moveTo(tipX, tipY);
-      g.lineTo(tipX - (ux * 11 + uy * 5.5) * k, tipY - (uy * 11 - ux * 5.5) * k);
-      g.lineTo(tipX - (ux * 11 - uy * 5.5) * k, tipY - (uy * 11 + ux * 5.5) * k);
+      g.lineTo(tipX - (ux * 11 + uy * 5.5) * k * hs, tipY - (uy * 11 - ux * 5.5) * k * hs);
+      g.lineTo(tipX - (ux * 11 - uy * 5.5) * k * hs, tipY - (uy * 11 + ux * 5.5) * k * hs);
       g.closePath(); g.fill();
     } else if (label) { g.beginPath(); g.arc(x0, y0, 3.5 * k, 0, Math.PI * 2); g.fill(); }
     if (!label) return;
@@ -346,14 +405,14 @@ class Component extends DCLogic {
     if (!this.popup) return;
     if (this.state.popupRunning) { this.stepVessel(this.popup.a, 280, 8); this.stepVessel(this.popup.b, 280, 8); this.popup.frame++; }
     const ma = this.meansOf(this.popup.a), mb = this.meansOf(this.popup.b);
-    this.drawVesselCanvas('popup-vessel-a', this.popup.a, 280, 8);
-    this.drawVesselCanvas('popup-vessel-b', this.popup.b, 280, 8);
+    this.drawVesselCanvas('popup-vessel-a', this.popup.a, 280, 8, this.inkA, this.state.showCyto);
+    this.drawVesselCanvas('popup-vessel-b', this.popup.b, 280, 8, this.inkB, this.state.showCyto);
     if (this.state.popupRunning && this.popup.frame % 20 === 0) {
       this.popup.trail.a.push([ma.s, ma.r]); this.popup.trail.b.push([mb.s, mb.r]);
       if (this.popup.trail.a.length > 150) { this.popup.trail.a.shift(); this.popup.trail.b.shift(); }
     }
     const proj = this.projections(ma, mb);
-    this.drawPlotCanvas('popup-plot', 840, ma, mb, this.popup.trail, proj);
+    this.drawPlotCanvas('popup-plot', 840, ma, mb, this.popup.trail, proj, this.state.showProj);
     if (this.popup.frame % 12 === 0) {
       this.setState({ popupTick: this.popup.frame, popupA: { r: ma.r, s: ma.s }, popupB: { r: mb.r, s: mb.s }, popupProj: proj });
     }
@@ -378,7 +437,35 @@ class Component extends DCLogic {
       verdict = 'Δ = ' + d.toFixed(2) + ' ≪ −ε: X’s signature is present in Y’s response, while Y’s is absent from X’s:';
       call = 'Y → X'; callColor = 'var(--sim-orange)';
     }
+    // The grid follows the reveal: a hidden panel gives its column back rather than
+    // leaving a hole, and with no plot on screen the two vessels take the stage.
+    const { showCyto, showPlot, showProj, showDelta } = this.state;
+    const gridCols = showPlot && showDelta ? 'minmax(0,0.62fr) minmax(0,1.27fr) minmax(0,1fr)'
+      : showPlot ? 'minmax(0,0.62fr) minmax(0,2.27fr)'
+      : showDelta ? 'minmax(0,1.5fr) minmax(0,1fr)'
+      : '1fr';
+    const btn = on => on ? 'btn-primary' : 'btn-secondary';
     return {
+      gridCols,
+      vesselFlow: showPlot ? 'column' : 'row',
+      // Square canvases: capping the width by viewport height is what keeps the pair
+      // on one screen — side by side while they are alone, stacked once the plot is up.
+      vesselMax: showPlot ? 'min(100%, 25vh)' : 'min(620px, 58vh)',
+      plotDisplay: showPlot ? 'block' : 'none',
+      deltaDisplay: showDelta ? 'flex' : 'none',
+      proseTwoDisplay: showPlot ? 'block' : 'none',
+      toggleCyto: this.toggleCyto,
+      togglePlot: this.togglePlot,
+      toggleProj: this.toggleProj,
+      toggleDelta: this.toggleDelta,
+      cytoBtnClass: btn(showCyto),
+      plotBtnClass: btn(showPlot),
+      projBtnClass: btn(showProj),
+      deltaBtnClass: btn(showDelta),
+      cytoPressed: String(!!showCyto),
+      plotPressed: String(!!showPlot),
+      projPressed: String(!!showProj),
+      deltaPressed: String(!!showDelta),
       popupARed: (this.state.popupA ? this.state.popupA.r : 0).toFixed(2),
       popupASq: (this.state.popupA ? this.state.popupA.s : 0).toFixed(2),
       popupBRed: (this.state.popupB ? this.state.popupB.r : 0).toFixed(2),
