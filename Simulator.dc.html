@@ -38,6 +38,7 @@ a:hover { color: var(--color-accent-700); }
      the reveal state, so that a lone pair can still fill the screen. */
   [data-sim="vessels"] { grid-column: 1 / -1 !important; flex-direction: row !important; }
   [data-sim="head"] { grid-template-columns: 1fr !important; align-items: start !important; }
+  [data-sim="legend"] { grid-column: 1 / -1 !important; flex-direction: row !important; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4) !important; }
 }
 @media (max-width: 720px) {
   [data-sim-page] { grid-template-columns: 1fr !important; }
@@ -93,6 +94,33 @@ a:hover { color: var(--color-accent-700); }
         </figcaption>
       </figure>
     </div>
+
+    <!-- Drawn with the same primitives, the same world units and the same 2x backing as
+         the vessels, at the scale a vessel uses when it is the only thing on screen —
+         so a swatch is a cell at full size and stays that size through every reveal. -->
+    <aside data-sim="legend" style="min-width:0;align-self:start;display:flex;flex-direction:column;gap:var(--space-2)">
+      <span style="font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 52%, transparent)">Legend</span>
+      <div style="display:flex;align-items:center;gap:var(--space-2)">
+        <canvas id="legend-cell-plain" width="88" height="88" style="display:block;width:44px;height:44px;flex:none"></canvas>
+        <span style="font-size:13px;line-height:1.25;white-space:nowrap">Unstimulated cell</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:var(--space-2)">
+        <canvas id="legend-cyto-y" width="88" height="88" style="display:block;width:44px;height:44px;flex:none"></canvas>
+        <span style="font-size:13px;line-height:1.25;white-space:nowrap">Cytokine Y</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:var(--space-2)">
+        <canvas id="legend-cell-y" width="88" height="88" style="display:block;width:44px;height:44px;flex:none"></canvas>
+        <span style="font-size:13px;line-height:1.25;white-space:nowrap">Y-stimulated cell</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:var(--space-2)">
+        <canvas id="legend-cyto-x" width="88" height="88" style="display:block;width:44px;height:44px;flex:none"></canvas>
+        <span style="font-size:13px;line-height:1.25;white-space:nowrap">Cytokine X</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:var(--space-2)">
+        <canvas id="legend-cell-x" width="88" height="88" style="display:block;width:44px;height:44px;flex:none"></canvas>
+        <span style="font-size:13px;line-height:1.25;white-space:nowrap">X-stimulated cell</span>
+      </div>
+    </aside>
 
     <!-- Centred and height-capped: with the verdict panel still hidden this column is
          wide, and an unbounded square plot would push the page off the screen. -->
@@ -154,13 +182,22 @@ class Component extends DCLogic {
     this.inkA = cs.getPropertyValue('--sim-vessel-a').trim() || '#8a4708';
     this.inkB = cs.getPropertyValue('--sim-vessel-b').trim() || '#0f5137';
     document.addEventListener('keydown', this.onKey);
+    // A paused simulation stops updating, so the legend would miss a jump into full
+    // screen without this — and full screen is exactly when it happens.
+    window.addEventListener('resize', this.onResize);
+    this.drawLegend();
     this.startPopupSim();
   }
 
+  componentDidUpdate() { this.drawLegend(); }
+
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('resize', this.onResize);
     this.stopPopupSim();
   }
+
+  onResize = () => this.drawLegend();
 
   // Reveal 3 needs the plot it draws into, and a projection left switched on behind a
   // hidden plot would be state you cannot see — so the two move together downwards.
@@ -290,6 +327,60 @@ class Component extends DCLogic {
       if (k.type === 'Y') { g.beginPath(); g.arc(k.x, k.y, Math.max(2, R * 0.27), 0, Math.PI * 2); g.fill(); }
       else { const s = Math.max(4, R * 0.47); g.fillRect(k.x - s / 2, k.y - s / 2, s, s); }
     }
+  }
+
+  // A vessel at full size — the cap `vesselMax` applies when nothing else is revealed.
+  // Kept here because the legend pins itself to the same number, and a swatch that
+  // does not match the cells in the tube is worse than no swatch at all.
+  vesselFull = { px: 620, vh: 58 };
+
+  // So the swatches are cells at the size the opening screen shows them, and stay
+  // that size once a reveal narrows the vessels. The full size is measured, not
+  // assumed — the vessels share their row with this legend — and only while the
+  // reveals are off, which is the state that defines it.
+  drawLegend() {
+    const cv = document.getElementById('popup-vessel-a');
+    if (cv && !this.state.showPlot && !this.state.showDelta) {
+      const w = cv.getBoundingClientRect().width;
+      if (w) this.vesselFullPx = w;
+    }
+    const scale = (this.vesselFullPx || this.vesselFull.px) / 280;
+    if (scale === this.legendScale) return;
+    this.legendScale = scale;
+    this.drawSwatch('legend-cell-plain', 'cell', 0, 0);
+    this.drawSwatch('legend-cyto-y', 'Y');
+    this.drawSwatch('legend-cell-y', 'cell', 0.8, 0);
+    this.drawSwatch('legend-cyto-x', 'X');
+    this.drawSwatch('legend-cell-x', 'cell', 0, 0.8);
+  }
+
+  // Deliberately the same lines as drawVesselCanvas draws for a cell and a cytokine,
+  // on the same 2x backing — a swatch that drifts from the vessel is a lie.
+  drawSwatch(id, kind, red, sq) {
+    const cv = document.getElementById(id); if (!cv) return;
+    const g = cv.getContext('2d'), R = 8, z = 2 * this.legendScale;
+    g.setTransform(z, 0, 0, z, 0, 0);
+    const W = cv.width / z, c = W / 2;
+    g.clearRect(0, 0, W, W);
+    if (kind === 'Y') {
+      g.fillStyle = this.mag;
+      g.beginPath(); g.arc(c, c, Math.max(2, R * 0.27), 0, Math.PI * 2); g.fill();
+      return;
+    }
+    if (kind === 'X') {
+      g.fillStyle = this.ink;
+      const s = Math.max(4, R * 0.47); g.fillRect(c - s / 2, c - s / 2, s, s);
+      return;
+    }
+    g.beginPath();
+    const rad = R * (1 - 0.92 * sq);
+    if (g.roundRect) g.roundRect(c - R, c - R, 2 * R, 2 * R, rad);
+    else g.arc(c, c, R, 0, Math.PI * 2);
+    // A cell is 90% opaque over the vessel's white; paint that white under the swatch
+    // too, or the page's paper grey shows through and the colour comes out different.
+    g.fillStyle = '#fff'; g.fill();
+    g.fillStyle = this.mix(this.cyan, this.mag, red);
+    g.globalAlpha = 0.9; g.fill(); g.globalAlpha = 1;
   }
 
   meansOf(vessel) {
@@ -442,17 +533,17 @@ class Component extends DCLogic {
     // The grid follows the reveal: a hidden panel gives its column back rather than
     // leaving a hole, and with no plot on screen the two vessels take the stage.
     const { showCyto, showPlot, showProj, showDelta } = this.state;
-    const gridCols = showPlot && showDelta ? 'minmax(0,0.62fr) minmax(0,1.27fr) minmax(0,1fr)'
-      : showPlot ? 'minmax(0,0.62fr) minmax(0,2.27fr)'
-      : showDelta ? 'minmax(0,1.5fr) minmax(0,1fr)'
-      : '1fr';
+    const gridCols = showPlot && showDelta ? 'minmax(0,0.72fr) auto minmax(0,1.15fr) minmax(0,0.9fr)'
+      : showPlot ? 'minmax(0,0.62fr) auto minmax(0,2.27fr)'
+      : showDelta ? 'minmax(0,1.5fr) auto minmax(0,1fr)'
+      : 'minmax(0,1fr) auto';
     const btn = on => on ? 'btn-primary' : 'btn-secondary';
     return {
       gridCols,
       vesselFlow: showPlot ? 'column' : 'row',
       // Square canvases: capping the width by viewport height is what keeps the pair
       // on one screen — side by side while they are alone, stacked once the plot is up.
-      vesselMax: showPlot ? 'min(100%, 25vh)' : 'min(620px, 58vh)',
+      vesselMax: showPlot ? 'min(100%, 25vh)' : 'min(' + this.vesselFull.px + 'px, ' + this.vesselFull.vh + 'vh)',
       plotDisplay: showPlot ? 'block' : 'none',
       deltaDisplay: showDelta ? 'flex' : 'none',
       proseTwoDisplay: showPlot ? 'block' : 'none',

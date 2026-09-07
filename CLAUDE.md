@@ -46,7 +46,11 @@ squareness–redness plot, the projection arrows with their dashed guides, and t
 panel, in that order (`space` = pause/play, `i` = inject, `r` = reset). Reveal `3` pulls `2`
 in with it and hiding `2` hides `3`, so a projection is never switched on behind a hidden
 plot. `renderVals` recomputes the grid from those flags, so a hidden panel gives its column
-back instead of leaving a hole. Hiding the cytokines is **drawing only** — `stepVessel` is
+back instead of leaving a hole. A static legend sits in its own column to the right of the
+vessels through every reveal; `drawSwatch` draws its five shapes with the same lines and
+world units `drawVesselCanvas` uses, pinned to the vessel size **measured while the reveals
+are off**, so a swatch is a cell as the opening screen shows it and keeps that size once a
+panel narrows the vessels. Hiding the cytokines is **drawing only** — `stepVessel` is
 untouched, so they still move, bind and cascade while invisible, which is the whole point of
 that reveal.
 
