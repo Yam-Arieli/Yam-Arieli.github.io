@@ -395,7 +395,9 @@ class Component extends DCLogic {
     if (!this.popup) return;
     this.addCyto(this.popup.a, 'Y', 21, 280);
     this.addCyto(this.popup.b, 'X', 21, 280, 7);
-    this.setState({ popupInjected: true, popupRunning: true });
+    // Injecting does not start the clock: paused stays paused, so a frozen vessel of
+    // cells and freshly placed cytokines can be talked through before anything moves.
+    this.setState({ popupInjected: true });
   };
   popupToggleRun = () => this.setState(s => ({ popupRunning: !s.popupRunning }));
   popupReset = () => this.buildPopup();
